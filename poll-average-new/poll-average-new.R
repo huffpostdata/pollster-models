@@ -207,7 +207,7 @@ makeJagsObject <- function(who,
 }
 
 makeInits <- function(){
-    sigma <- rtruncnorm(n=1,0,1,0,.1)
+    sigma <- runif(n=1,0,.01)
     xi <- rep(NA,forJags$NPERIODS)
     xi[1] <- rtruncnorm(n=1,0,1,.45,.1)
     for(i in 2:forJags$NPERIODS){
@@ -221,7 +221,7 @@ makeInits <- function(){
 }
 
 makeInitsContrasts <- function(){
-  sigma <- rtruncnorm(n=1,0,1,0,.1)
+  sigma <- runif(n=1,0,.01)
   xi <- rep(0,forJags$NPERIODS)
   xi[1] <- rtruncnorm(n=1,0,1,.45,.1)
     for(i in 2:forJags$NPERIODS){
