@@ -1,0 +1,5 @@
+*.pdf
+*.RData
+*/data/
+*/post/
+*/house/
