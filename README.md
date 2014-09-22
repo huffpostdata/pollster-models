@@ -32,6 +32,17 @@ A generalized version of the improvements made for the 2014 Senate/Gubenatorial 
 
 ### OSX
 
+Using [Homebrew](http://brew.sh/):
+
+	brew tap homebrew/science
+	brew install r
+	brew install jags
+	
+	R
+	> install.packages("rjags")
+	> install.packages("truncnorm")
+	> install.packages("rjson")
+
 ### Windows
 
 ### CentOS
