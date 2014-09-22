@@ -1,13 +1,13 @@
 dir.create('post/und/', showWarnings=FALSE, recursive=TRUE)
 ##no polls states to be added as needed: AL, HI, ID, NE, NV, OK, RI, SD, TN, VT, WY
 
-#chart <- '2014-arizona-governor-ducey-vs-duval'
-#outAZ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
-#outAZ <- outAZ[min(grep("Undecided",outAZ$who)):nrow(outAZ),]
-#outAZ$date2 <- as.Date(outAZ$date, format="%Y-%m-%d")
-#outAZ <- subset(outAZ, date2>today)
-#outAZ$state<-"AZ"
-#write.csv(outAZ, file=paste('post/und/',chart,'.csv',sep='')) ##save file for merging later
+chart <- '2014-arizona-governor-ducey-vs-duval'
+outAZ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outAZ <- outAZ[min(grep("Undecided",outAZ$who)):nrow(outAZ),]
+outAZ$date2 <- as.Date(outAZ$date, format="%Y-%m-%d")
+outAZ <- subset(outAZ, date2>today)
+outAZ$state<-"AZ"
+write.csv(outAZ, file=paste('post/und/',chart,'.csv',sep='')) ##save file for merging later
 
 chart <- '2014-arkansas-governor-hutchinson-vs-ross'
 outAR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))

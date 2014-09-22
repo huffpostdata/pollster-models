@@ -15,18 +15,18 @@ electionday <- as.Date("2014-11-04")
 ##no polls states to be added as needed: AL, HI, ID, NE, NV, OK, RI, SD, TN, VT, WY
 
 ##import data, put in correct format##
-#chart <- '2014-arizona-governor-ducey-vs-duval'
-#outAZ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
-#outAZ <- outAZ[min(grep("minus",outAZ$who)):nrow(outAZ),] #this tells it to only import the "minus" data--which has the probability associated
-#outAZ$date2 <- as.Date(outAZ$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-#outAZ <- subset(outAZ, date2>today) #deletes rows prior to today so that all files will have the same number of rows
-#outAZ$state<-"AZ"
-#outAZ$democrat<-"DuVal"
-#outAZ$republican<-"Ducey"
-#outAZ$lead<-ifelse(outAZ$who=="DuVal minus Ducey","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
-#outAZ$numdays <- electionday - today #code number of days to election
-#outAZ$numpolls <- 0
-#write.csv(outAZ, file=paste('post/',chart,'.csv',sep='')) ##save file for merging later
+chart <- '2014-arizona-governor-ducey-vs-duval'
+outAZ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outAZ <- outAZ[min(grep("minus",outAZ$who)):nrow(outAZ),] #this tells it to only import the "minus" data--which has the probability associated
+outAZ$date2 <- as.Date(outAZ$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
+outAZ <- subset(outAZ, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outAZ$state<-"AZ"
+outAZ$democrat<-"DuVal"
+outAZ$republican<-"Ducey"
+outAZ$lead<-ifelse(outAZ$who=="DuVal minus Ducey","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
+outAZ$numdays <- electionday - today #code number of days to election
+outAZ$numpolls <- 0
+write.csv(outAZ, file=paste('post/',chart,'.csv',sep='')) ##save file for merging later
 
 chart <- '2014-arkansas-governor-hutchinson-vs-ross'
 outAR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))

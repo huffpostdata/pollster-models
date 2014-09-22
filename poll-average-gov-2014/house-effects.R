@@ -11,14 +11,14 @@ if (file.exists("/var/www/html/pollster")) {
 
 today <- as.Date(Sys.time(),tz="America/New_York")
 
-#chart <- '2014-arizona-governor-ducey-vs-duval'
-#houseAZ <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
-#houseAZ <- houseAZ[min(grep("minus",houseAZ$who)):nrow(houseAZ),] #this tells it to only import the "minus" data--which has the probability associated
-#houseAZ$state<-"AZ"
-#houseAZ$democrat<-"DuVal"
-#houseAZ$republican<-"Ducey"
-#houseAZ$direction<-ifelse(houseAZ$who=="DuVal minus Ducey","Democrat positive", "Republican positive") ##code whether probability shows Dem positive or Rep positive
-#write.csv(houseAZ, file=paste('house/',chart,'.csv',sep='')) ##save file for merging later
+chart <- '2014-arizona-governor-ducey-vs-duval'
+houseAZ <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
+houseAZ <- houseAZ[min(grep("minus",houseAZ$who)):nrow(houseAZ),] #this tells it to only import the "minus" data--which has the probability associated
+houseAZ$state<-"AZ"
+houseAZ$democrat<-"DuVal"
+houseAZ$republican<-"Ducey"
+houseAZ$direction<-ifelse(houseAZ$who=="DuVal minus Ducey","Democrat positive", "Republican positive") ##code whether probability shows Dem positive or Rep positive
+write.csv(houseAZ, file=paste('house/',chart,'.csv',sep='')) ##save file for merging later
 
 chart <- '2014-arkansas-governor-hutchinson-vs-ross'
 houseAR <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
