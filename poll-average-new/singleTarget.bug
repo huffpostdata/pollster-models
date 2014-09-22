@@ -6,13 +6,13 @@ model{
   }
 
   ## transition model
-  xi.raw[1] ~ dnorm(.45,.1)T(0,1)
+  xi.raw[1] ~ dunif(0,1)
 
   for(p in 2:NPERIODS){
     xi.raw[p] ~ dnorm(xi.raw[p-1],tau)
   }
   tau <- pow(sigma,-2)
-  sigma ~ dnorm(0,.1)
+  sigma ~ dunif(0,.02)
 
   ## priors on house effects
   delta.raw ~ dmnorm(d0,D0)
