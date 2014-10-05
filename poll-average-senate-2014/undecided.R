@@ -1,5 +1,5 @@
 dir.create('post/und/', showWarnings=FALSE, recursive=TRUE)
-##no polls states to be added as needed: AL, DE, HI, ID, IL(un-#), KS, MA, ME, MT(un-#), NE, NJ, NM, OK1, OK2, RI, SC1, SC2, TN, TX, WY
+##no polls states to be added as needed: AL, DE, ID, MT(un-#), OK1, OK2, RI, WY
 
 chart <- '2014-alaska-senate-sullivan-vs-begich'
 outAK <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
@@ -32,6 +32,14 @@ outGA$date2 <- as.Date(outGA$date, format="%Y-%m-%d")
 outGA <- subset(outGA, date2>today)
 outGA$state<-"GA"
 write.csv(outGA, file=paste('post/und/',chart,'.csv',sep=''))
+
+chart <- '2014-hawaii-senate-cavasso-vs-schatz'
+outHI <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outHI <- outHI[min(grep("Undecided",outHI$who)):nrow(outHI),]
+outHI$date2 <- as.Date(outHI$date, format="%Y-%m-%d")
+outHI <- subset(outHI, date2>today)
+outHI$state<-"HI"
+write.csv(outHI, file=paste('post/und/',chart,'.csv',sep=''))
 
 chart <- '2014-iowa-senate-ernst-vs-braley'
 outIA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
@@ -81,6 +89,14 @@ outME <- subset(outME, date2>today)
 outME$state<-"ME"
 write.csv(outME, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-massachusetts-senate-herr-vs-markey'
+outMA <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outMA <- outMA[min(grep("Undecided",outMA$who)):nrow(outMA),]
+outMA$date2 <- as.Date(outMA$date, format="%Y-%m-%d")
+outMA <- subset(outMA, date2>today)
+outMA$state<-"MA"
+write.csv(outMA, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-michigan-senate-land-vs-peters'
 outMI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMI <- outMI[min(grep("Undecided",outMI$who)):nrow(outMI),]
@@ -113,6 +129,14 @@ write.csv(outMS, file=paste('post/und/',chart,'.csv',sep=''))
 #outMT$state<-"MT"
 #write.csv(outMT, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-nebraska-senate-sasse-vs-domina'
+outNE <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNE <- outNE[min(grep("Undecided",outNE$who)):nrow(outNE),]
+outNE$date2 <- as.Date(outNE$date, format="%Y-%m-%d")
+outNE <- subset(outNE, date2>today)
+outNE$state<-"NE"
+write.csv(outNE, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-north-carolina-senate-tillis-vs-hagan'
 outNC <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNC <- outNC[min(grep("Undecided",outNC$who)):nrow(outNC),]
@@ -128,6 +152,22 @@ outNH$date2 <- as.Date(outNH$date, format="%Y-%m-%d")
 outNH <- subset(outNH, date2>today)
 outNH$state<-"NH"
 write.csv(outNH, file=paste('post/und/',chart,'.csv',sep=''))
+
+chart <- '2014-new-jersey-senate-bell-vs-booker'
+outNJ <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNJ <- outNJ[min(grep("Undecided",outNJ$who)):nrow(outNJ),]
+outNJ$date2 <- as.Date(outNJ$date, format="%Y-%m-%d")
+outNJ <- subset(outNJ, date2>today)
+outNJ$state<-"NJ"
+write.csv(outNJ, file=paste('post/und/',chart,'.csv',sep=''))
+
+chart <- '2014-new-mexico-senate-weh-vs-udall'
+outNM <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNM <- outNM[min(grep("Undecided",outNM$who)):nrow(outNM),]
+outNM$date2 <- as.Date(outNM$date, format="%Y-%m-%d")
+outNM <- subset(outNM, date2>today)
+outNM$state<-"NM"
+write.csv(outNM, file=paste('post/und/',chart,'.csv',sep=''))
 
 chart <- '2014-oregon-senate-wehby-vs-merkley'
 outOR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
@@ -145,6 +185,14 @@ outSC1 <- subset(outSC1, date2>today)
 outSC1$state<-"SC1"
 write.csv(outSC1, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-south-carolina-senate-scott-vs-dickerson'
+outSC2 <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outSC2 <- outSC2[min(grep("Undecided",outSC2$who)):nrow(outSC2),]
+outSC2$date2 <- as.Date(outSC2$date, format="%Y-%m-%d")
+outSC2 <- subset(outSC2, date2>today)
+outSC2$state<-"SC2"
+write.csv(outSC2, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-south-dakota-senate-rounds-vs-weiland'
 outSD <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSD <- outSD[min(grep("Undecided",outSD$who)):nrow(outSD),]
@@ -152,6 +200,14 @@ outSD$date2 <- as.Date(outSD$date, format="%Y-%m-%d")
 outSD <- subset(outSD, date2>today)
 outSD$state<-"SD"
 write.csv(outSD, file=paste('post/und/',chart,'.csv',sep=''))
+
+chart <- '2014-tennessee-senate-alexander-vs-ball'
+outTN <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outTN <- outTN[min(grep("Undecided",outTN$who)):nrow(outTN),]
+outTN$date2 <- as.Date(outTN$date, format="%Y-%m-%d")
+outTN <- subset(outTN, date2>today)
+outTN$state<-"TN"
+write.csv(outTN, file=paste('post/und/',chart,'.csv',sep=''))
 
 chart <- '2014-texas-senate-cornyn-vs-alameel'
 outTX <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
