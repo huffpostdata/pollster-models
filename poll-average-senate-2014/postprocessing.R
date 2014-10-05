@@ -12,7 +12,7 @@ today <- as.Date(Sys.time(),tz="America/New_York")
 electionday <- as.Date("2014-11-04")
 
 ##repeat over all states##
-##no polls states to be added as needed: AL, DE, HI, ID, IL(un-#), KS, MA, ME, MT(un-#), NE, NJ, NM, OK1, OK2, RI, SC1, SC2, TN, TX, WY
+##no polls states to be added as needed: AL, DE, ID, MT(un-#), OK1, OK2, RI, WY
 
 ##import data, put in correct format##
 chart <- '2014-alaska-senate-sullivan-vs-begich'
@@ -66,6 +66,19 @@ outGA$lead<-ifelse(outGA$who=="Nunn minus Perdue","Democrat lead", "Republican l
 outGA$numdays <- electionday - today
 outGA$numpolls <- 0
 write.csv(outGA, file=paste('post/',chart,'.csv',sep=''))
+
+chart <- '2014-hawaii-senate-cavasso-vs-schatz'
+outHI <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outHI <- outHI[min(grep("minus",outHI$who)):nrow(outHI),]
+outHI$date2 <- as.Date(outHI$date, format="%Y-%m-%d")
+outHI <- subset(outHI, date2>today)
+outHI$state<-"HI"
+outHI$democrat<-"Schatz"
+outHI$republican<-"Cavasso"
+outHI$lead<-ifelse(outHI$who=="Schatz minus Cavasso","Democrat lead", "Republican lead")
+outHI$numdays <- electionday - today
+outHI$numpolls <- 0
+write.csv(outHI, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-iowa-senate-ernst-vs-braley'
 outIA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
@@ -145,6 +158,19 @@ outME$numdays <- electionday - today
 outME$numpolls <- 0
 write.csv(outME, file=paste('post/',chart,'.csv',sep=''))
 
+chart <- '2014-massachusetts-senate-herr-vs-markey'
+outMA <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outMA <- outMA[min(grep("minus",outMA$who)):nrow(outMA),]
+outMA$date2 <- as.Date(outMA$date, format="%Y-%m-%d")
+outMA <- subset(outMA, date2>today)
+outMA$state<-"MA"
+outMA$democrat<-"Markey"
+outMA$republican<-"Herr"
+outMA$lead<-ifelse(outMA$who=="Markey minus Herr","Democrat lead", "Republican lead")
+outMA$numdays <- electionday - today
+outMA$numpolls <- 0
+write.csv(outMA, file=paste('post/',chart,'.csv',sep=''))
+
 chart <- '2014-michigan-senate-land-vs-peters'
 outMI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMI <- outMI[min(grep("minus",outMI$who)):nrow(outMI),]
@@ -197,6 +223,19 @@ write.csv(outMS, file=paste('post/',chart,'.csv',sep=''))
 #outMT$numpolls <- 0
 #write.csv(outMT, file=paste('post/',chart,'.csv',sep=''))
 
+chart <- '2014-nebraska-senate-sasse-vs-domina'
+outNE <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNE <- outNE[min(grep("minus",outNE$who)):nrow(outNE),]
+outNE$date2 <- as.Date(outNE$date, format="%Y-%m-%d")
+outNE <- subset(outNE, date2>today)
+outNE$state<-"NE"
+outNE$democrat<-"Domina"
+outNE$republican<-"Sasse"
+outNE$lead<-ifelse(outNE$who=="Domina minus Sasse","Democrat lead", "Republican lead")
+outNE$numdays <- electionday - today
+outNE$numpolls <- 0
+write.csv(outNE, file=paste('post/',chart,'.csv',sep=''))
+
 chart <- '2014-north-carolina-senate-tillis-vs-hagan'
 outNC <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNC <- outNC[min(grep("minus",outNC$who)):nrow(outNC),]
@@ -222,6 +261,32 @@ outNH$lead<-ifelse(outNH$who=="Shaheen minus Brown","Democrat lead", "Republican
 outNH$numdays <- electionday - today
 outNH$numpolls <- 0
 write.csv(outNH, file=paste('post/',chart,'.csv',sep=''))
+
+chart <- '2014-new-jersey-senate-bell-vs-booker'
+outNJ <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNJ <- outNJ[min(grep("minus",outNJ$who)):nrow(outNJ),]
+outNJ$date2 <- as.Date(outNJ$date, format="%Y-%m-%d")
+outNJ <- subset(outNJ, date2>today)
+outNJ$state<-"NJ"
+outNJ$democrat<-"Booker"
+outNJ$republican<-"Bell"
+outNJ$lead<-ifelse(outNJ$who=="Booker minus Bell","Democrat lead", "Republican lead")
+outNJ$numdays <- electionday - today
+outNJ$numpolls <- 0
+write.csv(outNJ, file=paste('post/',chart,'.csv',sep=''))
+
+chart <- '2014-new-mexico-senate-weh-vs-udall'
+outNM <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNM <- outNM[min(grep("minus",outNM$who)):nrow(outNM),]
+outNM$date2 <- as.Date(outNM$date, format="%Y-%m-%d")
+outNM <- subset(outNM, date2>today)
+outNM$state<-"NM"
+outNM$democrat<-"Udall"
+outNM$republican<-"Weh"
+outNM$lead<-ifelse(outNM$who=="Udall minus Weh","Democrat lead", "Republican lead")
+outNM$numdays <- electionday - today
+outNM$numpolls <- 0
+write.csv(outNM, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-oregon-senate-wehby-vs-merkley'
 outOR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
@@ -249,6 +314,19 @@ outSC1$numdays <- electionday - today
 outSC1$numpolls <- 0
 write.csv(outSC1, file=paste('post/',chart,'.csv',sep=''))
 
+chart <- '2014-south-carolina-senate-scott-vs-dickerson'
+outSC2 <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outSC2 <- outSC2[min(grep("minus",outSC2$who)):nrow(outSC2),]
+outSC2$date2 <- as.Date(outSC2$date, format="%Y-%m-%d")
+outSC2 <- subset(outSC2, date2>today)
+outSC2$state<-"SC2"
+outSC2$democrat<-"Dickerson"
+outSC2$republican<-"Scott"
+outSC2$lead<-ifelse(outSC2$who=="Dickerson minus Scott","Democrat lead", "Republican lead")
+outSC2$numdays <- electionday - today
+outSC2$numpolls <- 0
+write.csv(outSC2, file=paste('post/',chart,'.csv',sep=''))
+
 chart <- '2014-south-dakota-senate-rounds-vs-weiland'
 outSD <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSD <- outSD[min(grep("minus",outSD$who)):nrow(outSD),]
@@ -261,6 +339,19 @@ outSD$lead<-ifelse(outSD$who=="Weiland minus Rounds","Democrat lead", "Republica
 outSD$numdays <- electionday - today
 outSD$numpolls <- 0
 write.csv(outSD, file=paste('post/',chart,'.csv',sep=''))
+
+chart <- '2014-tennessee-senate-alexander-vs-ball'
+outTN <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outTN <- outTN[min(grep("minus",outTN$who)):nrow(outTN),]
+outTN$date2 <- as.Date(outTN$date, format="%Y-%m-%d")
+outTN <- subset(outTN, date2>today)
+outTN$state<-"TN"
+outTN$democrat<-"Ball"
+outTN$republican<-"Alexander"
+outTN$lead<-ifelse(outTN$who=="Ball minus Alexander","Democrat lead", "Republican lead")
+outTN$numdays <- electionday - today
+outTN$numpolls <- 0
+write.csv(outTN, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-texas-senate-cornyn-vs-alameel'
 outTX <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
