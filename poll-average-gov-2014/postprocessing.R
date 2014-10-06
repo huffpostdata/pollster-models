@@ -216,9 +216,9 @@ outNE <- outNE[min(grep("minus",outNE$who)):nrow(outNE),] #this tells it to only
 outNE$date2 <- as.Date(outNE$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
 outNE <- subset(outNE, date2>today) #deletes rows prior to today so that all files will have the same number of rows
 outNE$state<-"NE"
-outNE$democrat<- "Hassbrook"
+outNE$democrat<- "Hassebrook"
 outNE$republican<-"Ricketts"
-outNE$lead<-ifelse(outNE$who=="Hassbrook minus Ricketts","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
+outNE$lead<-ifelse(outNE$who=="Hassebrook minus Ricketts","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
 outNE$numdays <- electionday - today #code number of days to election
 outNE$numpolls <- 0
 write.csv(outNE, file=paste('post/',chart,'.csv',sep=''))
