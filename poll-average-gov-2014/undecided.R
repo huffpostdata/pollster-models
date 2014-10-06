@@ -121,13 +121,13 @@ outMN <- subset(outMN, date2>today)
 outMN$state<-"MN"
 write.csv(outMN, file=paste('post/und/',chart,'.csv',sep=''))
 
-chart <- '2014-nebraska-governor-ricketts-vs-hassebrook'
-outNE <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
-outNE <- outNE[min(grep("Undecided",outNE$who)):nrow(outNE),]
-outNE$date2 <- as.Date(outNE$date, format="%Y-%m-%d")
-outNE <- subset(outNE, date2>today)
-outNE$state<-"NE"
-write.csv(outNE, file=paste('post/und/',chart,'.csv',sep=''))
+#chart <- '2014-nebraska-governor-ricketts-vs-hassebrook'
+#outNE <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+#outNE <- outNE[min(grep("Undecided",outNE$who)):nrow(outNE),]
+#outNE$date2 <- as.Date(outNE$date, format="%Y-%m-%d")
+#outNE <- subset(outNE, date2>today)
+#outNE$state<-"NE"
+#write.csv(outNE, file=paste('post/und/',chart,'.csv',sep=''))
 
 chart <- '2014-new-hampshire-governor-havenstein-vs-hassan'
 outNH <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
@@ -145,13 +145,13 @@ outNM <- subset(outNM, date2>today)
 outNM$state<-"NM"
 write.csv(outNM, file=paste('post/und/',chart,'.csv',sep=''))
 
-chart <- '2014-nevada-governor-sandoval-vs-goodman'
-outNV <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
-outNV <- outNV[min(grep("Undecided",outNV$who)):nrow(outNV),]
-outNV$date2 <- as.Date(outNV$date, format="%Y-%m-%d")
-outNV <- subset(outNV, date2>today)
-outNV$state<-"NV"
-write.csv(outNV, file=paste('post/und/',chart,'.csv',sep=''))
+#chart <- '2014-nevada-governor-sandoval-vs-goodman'
+#outNV <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+#outNV <- outNV[min(grep("Undecided",outNV$who)):nrow(outNV),]
+#outNV$date2 <- as.Date(outNV$date, format="%Y-%m-%d")
+#outNV <- subset(outNV, date2>today)
+#outNV$state<-"NV"
+#write.csv(outNV, file=paste('post/und/',chart,'.csv',sep=''))
 
 chart <- '2014-new-york-governor-astorino-vs-cuomo'
 outNY <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
@@ -169,13 +169,13 @@ outOH <- subset(outOH, date2>today)
 outOH$state<-"OH"
 write.csv(outOH, file=paste('post/und/',chart,'.csv',sep=''))
 
-chart <- '2014-oklahoma-governor-fallin-vs-dorman'
-outOK <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
-outOK <- outOK[min(grep("Undecided",outOK$who)):nrow(outOK),]
-outOK$date2 <- as.Date(outOK$date, format="%Y-%m-%d")
-outOK <- subset(outOK, date2>today)
-outOK$state<-"OK"
-write.csv(outOK, file=paste('post/und/',chart,'.csv',sep=''))
+#chart <- '2014-oklahoma-governor-fallin-vs-dorman'
+#outOK <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+#outOK <- outOK[min(grep("Undecided",outOK$who)):nrow(outOK),]
+#outOK$date2 <- as.Date(outOK$date, format="%Y-%m-%d")
+#outOK <- subset(outOK, date2>today)
+#outOK$state<-"OK"
+#write.csv(outOK, file=paste('post/und/',chart,'.csv',sep=''))
 
 chart <- '2014-oregon-governor-richardson-vs-kitzhaber'
 outOR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
