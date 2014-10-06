@@ -14,13 +14,17 @@ charts <- c(
   '2014-massachusetts-governor-baker-vs-coakley',
   '2014-michigan-governor-snyder-vs-schauer',
   '2014-minnesota-governor-dayton-vs-johnson',
+  '2014-nebraska-governor-ricketts-vs-hassebrook',
   '2014-new-hampshire-governor-havenstein-vs-hassan',
   '2014-new-mexico-governor-martinez-vs-king',
+  '2014-nevada-governor-sandoval-vs-goodman',
   '2014-new-york-governor-astorino-vs-cuomo',
   '2014-ohio-governor-kasich-vs-fitzgerald',
+  '2014-oklahoma-governor-fallin-vs-dorman',
   '2014-oregon-governor-richardson-vs-kitzhaber',
   '2014-pennsylvania-governor-corbett-vs-wolf',
   '2014-south-carolina-governor-haley-vs-sheheen',
+  '2014-south-dakota-governor-daugaard-vs-wismer'
   '2014-texas-governor-abbott-vs-davis',
   '2014-wisconsin-governor-walker-vs-burke'
 )
