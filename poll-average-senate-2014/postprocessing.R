@@ -68,7 +68,7 @@ outGA$numpolls <- 0
 write.csv(outGA, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-hawaii-senate-cavasso-vs-schatz'
-outHI <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outHI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outHI <- outHI[min(grep("minus",outHI$who)):nrow(outHI),]
 outHI$date2 <- as.Date(outHI$date, format="%Y-%m-%d")
 outHI <- subset(outHI, date2>today)
@@ -159,7 +159,7 @@ outME$numpolls <- 0
 write.csv(outME, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-massachusetts-senate-herr-vs-markey'
-outMA <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outMA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMA <- outMA[min(grep("minus",outMA$who)):nrow(outMA),]
 outMA$date2 <- as.Date(outMA$date, format="%Y-%m-%d")
 outMA <- subset(outMA, date2>today)
@@ -224,7 +224,7 @@ write.csv(outMS, file=paste('post/',chart,'.csv',sep=''))
 #write.csv(outMT, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-nebraska-senate-sasse-vs-domina'
-outNE <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNE <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNE <- outNE[min(grep("minus",outNE$who)):nrow(outNE),]
 outNE$date2 <- as.Date(outNE$date, format="%Y-%m-%d")
 outNE <- subset(outNE, date2>today)
@@ -263,7 +263,7 @@ outNH$numpolls <- 0
 write.csv(outNH, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-new-jersey-senate-bell-vs-booker'
-outNJ <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNJ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNJ <- outNJ[min(grep("minus",outNJ$who)):nrow(outNJ),]
 outNJ$date2 <- as.Date(outNJ$date, format="%Y-%m-%d")
 outNJ <- subset(outNJ, date2>today)
@@ -276,7 +276,7 @@ outNJ$numpolls <- 0
 write.csv(outNJ, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-new-mexico-senate-weh-vs-udall'
-outNM <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outNM <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNM <- outNM[min(grep("minus",outNM$who)):nrow(outNM),]
 outNM$date2 <- as.Date(outNM$date, format="%Y-%m-%d")
 outNM <- subset(outNM, date2>today)
@@ -315,7 +315,7 @@ outSC1$numpolls <- 0
 write.csv(outSC1, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-south-carolina-senate-scott-vs-dickerson'
-outSC2 <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outSC2 <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSC2 <- outSC2[min(grep("minus",outSC2$who)):nrow(outSC2),]
 outSC2$date2 <- as.Date(outSC2$date, format="%Y-%m-%d")
 outSC2 <- subset(outSC2, date2>today)
@@ -341,7 +341,7 @@ outSD$numpolls <- 0
 write.csv(outSD, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-tennessee-senate-alexander-vs-ball'
-outTN <- read.csv(paste('data/',chart,'/out.csv',sep=''))
+outTN <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outTN <- outTN[min(grep("minus",outTN$who)):nrow(outTN),]
 outTN$date2 <- as.Date(outTN$date, format="%Y-%m-%d")
 outTN <- subset(outTN, date2>today)
