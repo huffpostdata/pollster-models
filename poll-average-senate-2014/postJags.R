@@ -289,6 +289,8 @@ getCandD <- ifelse(chartObj$estimates[[1]]$party=="Dem", as.character(chartObj$e
 getCandR <- ifelse(chartObj$estimates[[1]]$party=="Rep", as.character(chartObj$estimates[[1]]$choice), as.character(chartObj$estimates[[2]]$choice))
 DCand <- if (chart=="2014-kansas-senate-roberts-vs-orman-vs-taylor") "Orman" else getCandD
 RCand <- if (chart=="2014-kansas-senate-roberts-vs-orman-vs-taylor") "Roberts" else getCandR
+DCand <- tail(strsplit(DCand,split=" ")[[1]],1)
+RCand <- tail(strsplit(RCand,split=" ")[[1]],1)
 
 candOrder <- paste(DCand,"minus",RCand, sep=" ")
 candOrder <- ifelse(housecontrast$who==candOrder, "Dfirst", "Rfirst")[1]
