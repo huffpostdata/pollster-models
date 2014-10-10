@@ -420,6 +420,7 @@ allstates$call[allstates$lead=="Democrat lead" & allstates$prob2 >= 50] <- "D"
 allstates$call[allstates$lead=="Republican lead" & allstates$prob2 >= 50] <- "R"
 allstates$call[allstates$lead=="Democrat lead" & allstates$prob2 < 50] <- "R"
 allstates$call[allstates$lead=="Republican lead" & allstates$prob2 < 50] <- "D"
+allstates$call[allstates$lead=="Republican lead" & allstates$prob2 < 50 & allstates$state=="AK"] <- "I"
 allstates$call[allstates$lead=="Independent lead" & allstates$prob2 >= 50] <- "I"
 allstates$call[allstates$lead=="Independent lead" & allstates$prob2 < 50] <- "R"
 
