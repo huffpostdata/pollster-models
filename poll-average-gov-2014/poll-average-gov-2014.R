@@ -63,6 +63,7 @@ if(any(nobs.bad)){
 }
 data$nobs <- nobs
 rm(nobs)
+data$nobs <- ifelse(data$nobs > 2000, 2000, data$nobs)
 
 ## pollsters and pops
 data$pp <- paste(data$Pollster,data$Population,sep=":")
