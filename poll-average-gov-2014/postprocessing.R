@@ -15,7 +15,7 @@ electionday <- as.Date("2014-11-04")
 ##no polls states to be added as needed: AL, HI, ID, NE, NV, OK, RI, SD, TN, VT, WY
 
 ##import data, put in correct format##
-chart <- '2014-alaska-govrnor-parnell-vs-walker'
+chart <- '2014-alaska-governor-parnell-vs-walker'
 outAK <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outAK <- outAK[min(grep("minus",outAK$who)):nrow(outAK),] #this tells it to only import the "minus" data--which has the probability associated
 outAK$date2 <- as.Date(outAK$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
