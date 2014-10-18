@@ -6,6 +6,7 @@ charts <- c(
   '2014-hawaii-senate-cavasso-vs-schatz',
   '2014-illinois-senate-oberweis-vs-durbin',
   '2014-iowa-senate-ernst-vs-braley',
+  '2014-idaho-senate-risch-vs-mitchell',
   '2014-kansas-senate-roberts-vs-orman-vs-taylor',
   '2014-kentucky-senate-mcconnell-vs-grimes',
   '2014-louisiana-senate-cassidy-vs-landrieu',
