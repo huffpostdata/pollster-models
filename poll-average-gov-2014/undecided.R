@@ -217,6 +217,14 @@ outPA <- subset(outPA, date2>today)
 outPA$state<-"PA"
 write.csv(outPA, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-rhode-island-governor-fung-vs-raimondo'
+outRI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outRI <- outRI[min(grep("Undecided",outRI$who)):nrow(outRI),] 
+outRI$date2 <- as.Date(outRI$date, format="%Y-%m-%d") 
+outRI <- subset(outRI, date2>today) 
+outRI$state<-"RI"
+write.csv(outRI, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-south-carolina-governor-haley-vs-sheheen'
 outSC <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSC <- outSC[min(grep("Undecided",outSC$who)):nrow(outSC),]
