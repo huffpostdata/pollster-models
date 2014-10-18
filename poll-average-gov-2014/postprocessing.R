@@ -119,6 +119,32 @@ outGA$numdays <- electionday - today #code number of days to election
 outGA$numpolls <- 0
 write.csv(outGA, file=paste('post/',chart,'.csv',sep=''))
 
+chart <- '2014-hawaii-governor-aiona-vs-ige'
+outHI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outHI <- outHI[min(grep("minus",outHI$who)):nrow(outHI),] #this tells it to only import the "minus" data--which has the probability associated
+outHI$date2 <- as.Date(outHI$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
+outHI <- subset(outHI, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outHI$state<-"HI"
+outHI$democrat<-"Ige"
+outHI$republican<-"Aiona"
+outHI$lead<-ifelse(outHI$who=="Ige minus Aiona","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
+outHI$numdays <- electionday - today #code number of days to election
+outHI$numpolls <- 0
+write.csv(outHI, file=paste('post/',chart,'.csv',sep=''))
+
+chart <- '2014-idaho-governor-otter-vs-balukoff'
+outID <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outID <- outID[min(grep("minus",outID$who)):nrow(outID),] #this tells it to only import the "minus" data--which has the probability associated
+outID$date2 <- as.Date(outID$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
+outID <- subset(outID, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outID$state<-"ID"
+outID$democrat<-"Balukoff"
+outID$republican<-"Otter"
+outID$lead<-ifelse(outID$who=="Balukoff minus Otter","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
+outID$numdays <- electionday - today #code number of days to election
+outID$numpolls <- 0
+write.csv(outID, file=paste('post/',chart,'.csv',sep=''))
+
 chart <- '2014-illinois-governor-rauner-vs-quinn'
 outIL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outIL <- outIL[min(grep("minus",outIL$who)):nrow(outIL),] #this tells it to only import the "minus" data--which has the probability associated
@@ -339,6 +365,19 @@ outPA$lead<-ifelse(outPA$who=="Wolf minus Corbett","Democrat lead", "Republican 
 outPA$numdays <- electionday - today #code number of days to election
 outPA$numpolls <- 0
 write.csv(outPA, file=paste('post/',chart,'.csv',sep=''))
+
+chart <- '2014-rhode-island-governor-fung-vs-raimondo'
+outRI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outRI <- outRI[min(grep("minus",outRI$who)):nrow(outRI),] #this tells it to only import the "minus" data--which has the probability associated
+outRI$date2 <- as.Date(outRI$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
+outRI <- subset(outRI, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outRI$state<-"RI"
+outRI$democrat<-"Raimondo"
+outRI$republican<-"Fung"
+outRI$lead<-ifelse(outRI$who=="Raimondo minus Fung","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
+outRI$numdays <- electionday - today #code number of days to election
+outRI$numpolls <- 0
+write.csv(outRI, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-south-carolina-governor-haley-vs-sheheen'
 outSC <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
