@@ -7,6 +7,8 @@ charts <- c(
   '2014-connecticut-governor-foley-vs-malloy',
   '2014-florida-governor-scott-vs-crist',
   '2014-georgia-governor-deal-vs-carter',
+  '2014-hawaii-governor-aiona-vs-ige',
+  '2014-idaho-governor-otter-vs-balukoff',
   '2014-illinois-governor-rauner-vs-quinn',
   '2014-iowa-governor-branstad-vs-hatch',
   '2014-kansas-governor-brownback-vs-davis',
@@ -24,6 +26,7 @@ charts <- c(
   '2014-oklahoma-governor-fallin-vs-dorman',
   '2014-oregon-governor-richardson-vs-kitzhaber',
   '2014-pennsylvania-governor-corbett-vs-wolf',
+  '2014-rhode-island-governor-fung-vs-raimondo'
   '2014-south-carolina-governor-haley-vs-sheheen',
   '2014-south-dakota-governor-daugaard-vs-wismer'
   '2014-texas-governor-abbott-vs-davis',
