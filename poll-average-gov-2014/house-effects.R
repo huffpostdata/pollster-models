@@ -83,6 +83,25 @@ houseGA$republican<-"Deal"
 houseGA$direction<-ifelse(houseGA$who=="Carter minus Deal","Democrat positive", "Republican positive") ##code whether probability shows Dem positive or Rep positive
 write.csv(houseGA, file=paste('house/',chart,'.csv',sep=''))
 
+dir.create('house/', showWarnings=FALSE, recursive=TRUE)
+chart <- '2014-hawaii-governor-aiona-vs-ige'
+houseHI <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
+houseHI <- houseHI[min(grep("minus",houseHI$who)):nrow(houseHI),] #this tells it to only import the "minus" data--which has the probability associated
+houseHI$state<-"HI"
+houseHI$democrat<-"Ige"
+houseHI$republican<-"Aiona"
+houseHI$direction<-ifelse(houseHI$who=="Ige minus Aiona","Democrat positive", "Republican positive") ##code whether probability shows Dem positive or Rep positive
+write.csv(houseHI, file=paste('house/',chart,'.csv',sep=''))
+
+chart <- '2014-idaho-governor-otter-vs-balukoff'
+houseID <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
+houseID <- houseID[min(grep("minus",houseID$who)):nrow(houseID),] #this tells it to only import the "minus" data--which has the probability associated
+houseID$state<-"ID"
+houseID$democrat<-"Balukoff"
+houseID$republican<-"Otter"
+houseID$direction<-ifelse(houseID$who=="Balukoff minus Otter","Democrat positive", "Republican positive") ##code whether probability shows Dem positive or Rep positive
+write.csv(houseID, file=paste('house/',chart,'.csv',sep=''))
+
 chart <- '2014-illinois-governor-rauner-vs-quinn'
 houseIL <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
 houseIL <- houseIL[min(grep("minus",houseIL$who)):nrow(houseIL),] #this tells it to only import the "minus" data--which has the probability associated
@@ -235,6 +254,16 @@ housePA$democrat<- "Wolf"
 housePA$republican<-"Corbett"
 housePA$direction<-ifelse(housePA$who=="Wolf minus Corbett","Democrat positive", "Republican positive") ##code whether probability shows Dem positive or Rep positive
 write.csv(housePA, file=paste('house/',chart,'.csv',sep=''))
+
+chart <- '2014-rhode-island-governor-fung-vs-raimondo'
+chartObj <- fromJSON(file=paste("http://elections.huffingtonpost.com/pollster/api/charts/",chart,".json",sep=""), method='C')
+houseRI <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
+houseRI <- houseRI[min(grep("minus",houseRI$who)):nrow(houseRI),] #this tells it to only import the "minus" data--which has the probability associated
+houseRI$state<-"RI"
+houseRI$democrat<-"Raimondo"
+houseRI$republican<-"Fung"
+houseRI$direction<-ifelse(houseRI$who=="Raimondo minus Fung","Democrat positive", "Republican positive") ##code whether probability shows Dem positive or Rep positive
+write.csv(houseRI, file=paste('house/',chart,'.csv',sep=''))
 
 chart <- '2014-south-carolina-governor-haley-vs-sheheen'
 houseSC <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
