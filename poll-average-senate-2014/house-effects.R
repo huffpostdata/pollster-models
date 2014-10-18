@@ -65,6 +65,16 @@ houseIA$republican<-"Ernst"
 houseIA$direction<-ifelse(houseIA$who=="Braley minus Ernst","Democrat positive", "Republican positive")
 write.csv(houseIA, file=paste('house/',chart,'.csv',sep=''))
 
+chart <- '2014-idaho-senate-risch-vs-mitchell'
+houseID <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
+houseID <- houseID[min(grep("minus",houseID$who)):nrow(houseID),]
+houseID$state<-"ID"
+houseID$democrat<-"Mitchell"
+houseID$republican<-"Risch"
+houseID$direction<-ifelse(houseID$who=="Mitchell minus Risch","Democrat positive", "Republican positive")
+write.csv(houseID, file=paste('house/',chart,'.csv',sep=''))
+
+
 chart <- '2014-illinois-senate-oberweis-vs-durbin'
 houseIL <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
 houseIL <- houseIL[min(grep("minus",houseIL$who)):nrow(houseIL),]
