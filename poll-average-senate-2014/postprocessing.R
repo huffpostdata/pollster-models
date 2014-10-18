@@ -12,7 +12,7 @@ today <- as.Date(Sys.time(),tz="America/New_York")
 electionday <- as.Date("2014-11-04")
 
 ##repeat over all states##
-##no polls states to be added as needed: AL, DE, ID, MT(un-#), OK1, OK2, RI, WY
+##no polls states to be added as needed: AL, DE, MT(un-#), OK1, OK2, RI, WY
 
 ##import data, put in correct format##
 chart <- '2014-alaska-senate-sullivan-vs-begich'
@@ -92,6 +92,19 @@ outIA$lead<-ifelse(outIA$who=="Braley minus Ernst","Democrat lead", "Republican 
 outIA$numdays <- electionday - today
 outIA$numpolls <- 0
 write.csv(outIA, file=paste('post/',chart,'.csv',sep=''))
+
+chart <- '2014-idaho-senate-risch-vs-mitchell'
+outID <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outID <- outID[min(grep("minus",outID$who)):nrow(outID),]
+outID$date2 <- as.Date(outID$date, format="%Y-%m-%d")
+outID <- subset(outID, date2>today)
+outID$state<-"ID"
+outID$democrat<-"Mitchell"
+outID$republican<-"Risch"
+outID$lead<-ifelse(outID$who=="Mitchell minus Risch","Democrat lead", "Republican lead")
+outID$numdays <- electionday - today
+outID$numpolls <- 0
+write.csv(outID, file=paste('post/',chart,'.csv',sep=''))
 
 chart <- '2014-illinois-senate-oberweis-vs-durbin'
 outIL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
