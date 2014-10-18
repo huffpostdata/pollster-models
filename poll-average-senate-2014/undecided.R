@@ -49,6 +49,14 @@ outIA <- subset(outIA, date2>today)
 outIA$state<-"IA"
 write.csv(outIA, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-idaho-senate-risch-vs-mitchell'
+outID <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outID <- outID[min(grep("Undecided",outID$who)):nrow(outID),]
+outID$date2 <- as.Date(outID$date, format="%Y-%m-%d")
+outID <- subset(outID, date2>today)
+outID$state<-"ID"
+write.csv(outID, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-illinois-senate-oberweis-vs-durbin'
 outIL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outIL <- outIL[min(grep("Undecided",outIL$who)):nrow(outIL),]
