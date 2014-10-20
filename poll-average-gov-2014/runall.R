@@ -26,7 +26,7 @@ charts <- c(
   '2014-oklahoma-governor-fallin-vs-dorman',
   '2014-oregon-governor-richardson-vs-kitzhaber',
   '2014-pennsylvania-governor-corbett-vs-wolf',
-  '2014-rhode-island-governor-fung-vs-raimondo'
+  '2014-rhode-island-governor-fung-vs-raimondo',
   '2014-south-carolina-governor-haley-vs-sheheen',
   '2014-south-dakota-governor-daugaard-vs-wismer'
   '2014-texas-governor-abbott-vs-davis',
