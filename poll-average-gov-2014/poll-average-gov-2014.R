@@ -66,6 +66,10 @@ rm(nobs)
 data$nobs <- ifelse(data$nobs > 2000, 2000, data$nobs)
 
 ## pollsters and pops
+if(chart=='2014-georgia-governor-deal-vs-carter'){
+	data$Pollster <- ifelse(data$endDate < as.Date("2014-10-01"), paste(data$Pollster,'old', sep="-"), data$Pollster)
+	}else{data$Pollster <- data$Pollster
+}
 data$pp <- paste(data$Pollster,data$Population,sep=":")
 thePollsters <- sort(unique(data$pp))
 thePollstersA <- as.list(sort(data$pp))
@@ -96,6 +100,10 @@ data$goodlist <- ifelse(match==0 & data$Affiliation=="None", 1, 0)
 
 ##subset of polls in each group
 theGoodPolls <- ifelse(data$goodlist == 1, data$pp, NA)
+if(chart=='2014-georgia-governor-deal-vs-carter'){
+	theGoodPolls <- ifelse(data$endDate < as.Date("2014-10-01"), NA, theGoodPolls)
+	}else{theGoodPolls <- theGoodPolls
+}
 theGoodPollslist <- sort(unique(theGoodPolls))
 
 ##code to take out RV duplicates
