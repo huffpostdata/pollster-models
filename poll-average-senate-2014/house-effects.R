@@ -47,6 +47,15 @@ houseGA$republican<-"Perdue"
 houseGA$direction<-ifelse(houseGA$who=="Nunn minus Perdue","Democrat positive", "Republican positive")
 write.csv(houseGA, file=paste('house/',chart,'.csv',sep=''))
 
+chart <- '2014-georgia-senate-runoff'
+houseGAR <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
+houseGAR <- houseGAR[min(grep("minus",houseGAR$who)):nrow(houseGAR),]
+houseGAR$state<-"GAR"
+houseGAR$democrat<-"Nunn"
+houseGAR$republican<-"Perdue"
+houseGAR$direction<-ifelse(houseGAR$who=="Nunn minus Perdue","Democrat positive", "Republican positive")
+write.csv(houseGAR, file=paste('house/',chart,'.csv',sep=''))
+
 chart <- '2014-hawaii-senate-cavasso-vs-schatz'
 houseHI <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
 houseHI <- houseHI[min(grep("minus",houseHI$who)):nrow(houseHI),]
