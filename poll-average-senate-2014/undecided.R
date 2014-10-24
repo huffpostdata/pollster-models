@@ -33,6 +33,14 @@ outGA <- subset(outGA, date2>today)
 outGA$state<-"GA"
 write.csv(outGA, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-georgia-senate-runoff'
+outGAR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outGAR <- outGAR[min(grep("Undecided",outGAR$who)):nrow(outGAR),]
+outGAR$date2 <- as.Date(outGAR$date, format="%Y-%m-%d")
+outGAR <- subset(outGAR, date2>today)
+outGAR$state<-"GAR"
+write.csv(outGAR, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-hawaii-senate-cavasso-vs-schatz'
 outHI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outHI <- outHI[min(grep("Undecided",outHI$who)):nrow(outHI),]
