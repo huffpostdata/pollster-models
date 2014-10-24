@@ -67,6 +67,19 @@ outGA$numdays <- electionday - today
 outGA$numpolls <- 0
 write.csv(outGA, file=paste('post/',chart,'.csv',sep=''))
 
+chart <- '2014-georgia-senate-runoff'
+outGAR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outGAR <- outGAR[min(grep("minus",outGAR$who)):nrow(outGAR),]
+outGAR$date2 <- as.Date(outGAR$date, format="%Y-%m-%d")
+outGAR <- subset(outGAR, date2>today)
+outGAR$state<-"GAR"
+outGAR$democrat<-"Nunn"
+outGAR$republican<-"Perdue"
+outGAR$lead<-ifelse(outGAR$who=="Nunn minus Perdue","Democrat lead", "Republican lead")
+outGAR$numdays <- electionday - today
+outGAR$numpolls <- 0
+write.csv(outGAR, file=paste('post/',chart,'.csv',sep=''))
+
 chart <- '2014-hawaii-senate-cavasso-vs-schatz'
 outHI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outHI <- outHI[min(grep("minus",outHI$who)):nrow(outHI),]
@@ -448,6 +461,41 @@ allstates$finalprobA <- 50 + ((allstates$prob2 - 50)*allstates$prob2ratio) #mult
 allstates$finalprob <- allstates$finalprobA - allstates$undecMargin #final probability
 allstates$finalprob[allstates$finalprob <= 50] <- 50 #truncate at 50 to keep undecided adjustment from flipping the race
 allstates$pollprob <- allstates$prob2
+
+##Georgia probability
+	outGA <- read.csv(paste('data/2014-georgia-senate-perdue-vs-nunn/out.csv',sep=''))
+	outGA$date2 <- as.Date(outGA$date, format="%Y-%m-%d")
+	outGAP <- subset(outGA, outGA$who=="Perdue")
+	outGAP <- subset(outGAP, date2==as.Date("2014-11-04"))
+	outGAP <- outGAP[,c("xibar", "up")]
+	PerdueSD <- ((outGAP$up - outGAP$xibar)/1.64)	
+	PerdueZ <- (50.001 - outGAP$xibar)/PerdueSD
+	PerdueProb <- round((2*pnorm(-abs(PerdueZ))),2)
+	outGAN <- subset(outGA, outGA$who=="Nunn")
+	outGAN <- subset(outGAN, date2==as.Date("2014-11-04"))
+	outGAN <- outGAN[,c("xibar", "up")]
+	NunnSD <- ((outGAN$up - outGAN$xibar)/1.64)	
+	NunnZ <- (50.001 - outGAN$xibar)/NunnSD
+	NunnProb <- round((2*pnorm(-abs(NunnZ))),2)
+	runoffprob <- 1 - (PerdueProb + NunnProb)
+
+	GAR <- subset(allstates, allstates$state=="GAR")
+	PerdueRunoff <- 0
+	NunnRunoff <- 0
+	PerdueRunoff[GAR$call=="R"] <- GAR$finalprob/100
+	NunnRunoff[GAR$call=="R"] <- 1-PerdueRunoff
+	NunnRunoff[GAR$call=="D"] <- GAR$finalprob/100 
+	PerdueRunoff[GAR$call=="D"] <- 1-NunnRunoff
+		
+	finalPerdue <- (PerdueProb + (runoffprob * PerdueRunoff))*100
+	finalNunn <- (NunnProb + (runoffprob * NunnRunoff))*100
+
+	allstates$finalprob[allstates$state=="GA" & allstates$call=="D"] <- finalNunn
+	allstates$finalprob[allstates$state=="GA" & allstates$call=="R"] <- finalPerdue
+
+#kick runoff row out so it's not considered in model#
+allstates <- subset(allstates, allstates$state != "GAR")
+
 
 #write.csv(allstates,"allstates.csv") ##write the whole file only if you need to check everything
 
