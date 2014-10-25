@@ -473,7 +473,7 @@ allstates$pollprob <- allstates$prob2
   outGAP$xibar <- outGAP$xibar + undecidedPct/2
 	PerdueSD <- ((outGAP$up - outGAP$xibar)/1.64)
 	PerdueZ <- (50.001 - outGAP$xibar)/PerdueSD
-	PerdueProb <- round((2*pnorm(-abs(PerdueZ))),2)
+	PerdueProb <- round((pnorm(-abs(PerdueZ))),2)
 	outGAN <- subset(outGA, outGA$who=="Nunn")
 	outGAN <- subset(outGAN, date2==as.Date("2014-11-04"))
 	outGAN <- outGAN[,c("xibar", "up")]
@@ -481,8 +481,8 @@ allstates$pollprob <- allstates$prob2
   outGAN$xibar <- outGAN$xibar + undecidedPct/2
 	NunnSD <- ((outGAN$up - outGAN$xibar)/1.64)
 	NunnZ <- (50.001 - outGAN$xibar)/NunnSD
-	NunnProb <- round((2*pnorm(-abs(NunnZ))),2)
-	runoffprob <- 1 - (PerdueProb + NunnProb)
+	NunnProb <- round((pnorm(-abs(NunnZ))),2)
+	runoffprob <- ifelse(PerdueProb >= NunnProb, (1 - PerdueProb), (1-NunnProb)) 
 
   print(outGAP)
   print(PerdueProb)
