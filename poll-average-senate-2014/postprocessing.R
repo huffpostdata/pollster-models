@@ -464,7 +464,7 @@ allstates$pollprob <- allstates$prob2
 
 ##Georgia probability
 undecidedPct = 7.5
-outGA <- read.csv(paste('data/2014-georgia-senate-perdue-vs-nunn/out.csv',sep=''))
+outGA <- read.csv(paste(dataDir,'2014-georgia-senate-perdue-vs-nunn/out.csv',sep=''))
 outGA$date2 <- as.Date(outGA$date, format="%Y-%m-%d")
 outGAP <- subset(outGA, outGA$who=="Perdue")
 outGAP <- subset(outGAP, date2==as.Date("2014-11-04"))
