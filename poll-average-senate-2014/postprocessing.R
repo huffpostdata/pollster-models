@@ -482,7 +482,7 @@ outGAN$xibar <- outGAN$xibar + undecidedPct/2
 NunnSD <- ((outGAN$up - outGAN$xibar)/1.64)
 NunnZ <- (50.001 - outGAN$xibar)/NunnSD
 NunnProb <- round((pnorm(-abs(NunnZ))),2)
-runoffprob <- ifelse(PerdueProb >= NunnProb, (1 - PerdueProb), (1-NunnProb))
+runoffprob <- 1 - (PerdueProb + NunnProb)
 
 print(outGAP)
 print(PerdueProb)
