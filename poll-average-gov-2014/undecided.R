@@ -302,4 +302,4 @@ write.csv(alldata,"post/und/alldata.csv")
 undecided <- alldata[which(alldata$date2=="2014-11-04"),]
 write.csv(undecided,"post/und/pollstates.csv")
 
-pollstates$undecided <- undecided$xibar
+allstates$undecided <- undecided$xibar
