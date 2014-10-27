@@ -1,5 +1,5 @@
 dir.create('post/und/', showWarnings=FALSE, recursive=TRUE)
-##no polls states to be added as needed: AL, DE, ID, MT(un-#), OK1, OK2, RI, WY
+##no polls states to be added as needed: AL, RI
 
 chart <- '2014-alaska-senate-sullivan-vs-begich'
 outAK <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
