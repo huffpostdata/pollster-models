@@ -9,7 +9,7 @@ if (file.exists("/var/www/html/pollster")) {
 
 today <- as.Date(Sys.time(),tz="America/New_York")
 
-##no polls states to be added as needed: AL, DE, ID, MT(un-#), OK1, OK2, RI, WY
+##no polls states to be added as needed: AL, RI
 
 chart <- '2014-alaska-senate-sullivan-vs-begich'
 houseAK <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
@@ -37,6 +37,15 @@ houseCO$democrat<-"Udall"
 houseCO$republican<-"Gardner"
 houseCO$direction<-ifelse(houseCO$who=="Udall minus Gardner","Democrat positive", "Republican positive")
 write.csv(houseCO, file=paste('house/',chart,'.csv',sep=''))
+
+chart <- '2014-delaware-senate-wade-vs-coons'
+houseDE <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
+houseDE <- houseDE[min(grep("minus",houseDE$who)):nrow(houseDE),]
+houseDE$state<-"DE"
+houseDE$democrat<-"Coons"
+houseDE$republican<-"Wade"
+houseDE$direction<-ifelse(houseDE$who=="Coons minus Wade","Democrat positive", "Republican positive")
+write.csv(houseDE, file=paste('house/',chart,'.csv',sep=''))
 
 chart <- '2014-georgia-senate-perdue-vs-nunn'
 houseGA <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
@@ -165,14 +174,14 @@ houseMS$republican<-"Cochran"
 houseMS$direction<-ifelse(houseMS$who=="Childers minus Cochran","Democrat positive", "Republican positive")
 write.csv(houseMS, file=paste('house/',chart,'.csv',sep=''))
 
-#chart <- '2014-montana-senate-daines-vs-walsh'
-#houseMT <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
-#houseMT <- houseMT[min(grep("minus",houseMT$who)):nrow(houseMT),]
-#houseMT$state<-"MT"
-#houseMT$democrat<-"Walsh"
-#houseMT$republican<-"Daines"
-#houseMT$direction<-ifelse(houseMT$who=="Walsh minus Daines","Democrat positive", "Republican positive")
-#write.csv(houseMT, file=paste('house/',chart,'.csv',sep=''))
+chart <- '2014-montana-senate-daines-vs-curtis'
+houseMT <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
+houseMT <- houseMT[min(grep("minus",houseMT$who)):nrow(houseMT),]
+houseMT$state<-"MT"
+houseMT$democrat<-"Curtis"
+houseMT$republican<-"Daines"
+houseMT$direction<-ifelse(houseMT$who=="Curtis minus Daines","Democrat positive", "Republican positive")
+write.csv(houseMT, file=paste('house/',chart,'.csv',sep=''))
 
 chart <- '2014-nebraska-senate-sasse-vs-domina'
 houseNE <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
@@ -218,6 +227,24 @@ houseNM$democrat<-"Udall"
 houseNM$republican<-"Weh"
 houseNM$direction<-ifelse(houseNM$who=="Udall minus Weh","Democrat positive", "Republican positive")
 write.csv(houseNM, file=paste('house/',chart,'.csv',sep=''))
+
+chart <- '2014-oklahoma-senate-inhofe-vs-silverstein'
+houseOK1 <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
+houseOK1 <- houseOK1[min(grep("minus",houseOK1$who)):nrow(houseOK1),]
+houseOK1$state<-"OK1"
+houseOK1$democrat<-"Silverstein"
+houseOK1$republican<-"Inhofe"
+houseOK1$direction<-ifelse(houseOK1$who=="Silverstein minus Inhofe","Democrat positive", "Republican positive")
+write.csv(houseOK1, file=paste('house/',chart,'.csv',sep=''))
+
+chart <- '2014-oklahoma-senate-lankford-vs-johnson'
+houseOK2 <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
+houseOK2 <- houseOK2[min(grep("minus",houseOK2$who)):nrow(houseOK2),]
+houseOK2$state<-"OK2"
+houseOK2$democrat<-"Johnson"
+houseOK2$republican<-"Lankford"
+houseOK2$direction<-ifelse(houseOK2$who=="Johnson minus Lankford","Democrat positive", "Republican positive")
+write.csv(houseOK2, file=paste('house/',chart,'.csv',sep=''))
 
 chart <- '2014-oregon-senate-wehby-vs-merkley'
 houseOR <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
@@ -290,6 +317,15 @@ houseWV$democrat<-"Tennant"
 houseWV$republican<-"Capito"
 houseWV$direction<-ifelse(houseWV$who=="Tennant minus Capito","Democrat positive", "Republican positive")
 write.csv(houseWV, file=paste('house/',chart,'.csv',sep=''))
+
+chart <- '2014-wyoming-senate'
+houseWY <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
+houseWY <- houseWY[min(grep("minus",houseWY$who)):nrow(houseWY),]
+houseWY$state<-"WY"
+houseWY$democrat<-"Hardy"
+houseWY$republican<-"Enzi"
+houseWY$direction<-ifelse(houseWY$who=="Hardy minus Enzi","Democrat positive", "Republican positive")
+write.csv(houseWY, file=paste('house/',chart,'.csv',sep=''))
 
 
 filenames <- list.files(path="house/", pattern='2014.*csv', full.names=TRUE)
