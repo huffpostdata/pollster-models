@@ -484,12 +484,6 @@ NunnZ <- (50.001 - outGAN$xibar)/NunnSD
 NunnProb <- round((pnorm(-abs(NunnZ))),3)
 runoffprob <- 1 - (PerdueProb + NunnProb)
 
-print(outGAP)
-print(PerdueProb)
-print(outGAN)
-print(NunnProb)
-print(runoffprob)
-
 GAR <- subset(allstates, allstates$state=="GA-runoff")
 PerdueRunoff <- 0
 NunnRunoff <- 0
