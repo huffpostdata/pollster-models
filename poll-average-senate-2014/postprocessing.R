@@ -72,7 +72,7 @@ outGAR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outGAR <- outGAR[min(grep("minus",outGAR$who)):nrow(outGAR),]
 outGAR$date2 <- as.Date(outGAR$date, format="%Y-%m-%d")
 outGAR <- subset(outGAR, date2>today)
-outGAR$state<-"GAR"
+outGAR$state<-"GA-runoff"
 outGAR$democrat<-"Nunn"
 outGAR$republican<-"Perdue"
 outGAR$lead<-ifelse(outGAR$who=="Nunn minus Perdue","Democrat lead", "Republican lead")
@@ -473,7 +473,7 @@ outGAP$up <- outGAP$up + undecidedPct/2
 outGAP$xibar <- outGAP$xibar + undecidedPct/2
 PerdueSD <- ((outGAP$up - outGAP$xibar)/1.64)
 PerdueZ <- (50.001 - outGAP$xibar)/PerdueSD
-PerdueProb <- round((pnorm(-abs(PerdueZ))),2)
+PerdueProb <- round((pnorm(-abs(PerdueZ))),3)
 outGAN <- subset(outGA, outGA$who=="Nunn")
 outGAN <- subset(outGAN, date2==as.Date("2014-11-04"))
 outGAN <- outGAN[,c("xibar", "up")]
@@ -481,7 +481,7 @@ outGAN$up <- outGAN$up + undecidedPct/2
 outGAN$xibar <- outGAN$xibar + undecidedPct/2
 NunnSD <- ((outGAN$up - outGAN$xibar)/1.64)
 NunnZ <- (50.001 - outGAN$xibar)/NunnSD
-NunnProb <- round((pnorm(-abs(NunnZ))),2)
+NunnProb <- round((pnorm(-abs(NunnZ))),3)
 runoffprob <- 1 - (PerdueProb + NunnProb)
 
 print(outGAP)
@@ -490,7 +490,7 @@ print(outGAN)
 print(NunnProb)
 print(runoffprob)
 
-GAR <- subset(allstates, allstates$state=="GAR")
+GAR <- subset(allstates, allstates$state=="GA-runoff")
 PerdueRunoff <- 0
 NunnRunoff <- 0
 PerdueRunoff[GAR$call=="R"] <- GAR$finalprob/100
@@ -501,16 +501,22 @@ PerdueRunoff[GAR$call=="D"] <- 1-NunnRunoff
 finalPerdue <- (PerdueProb + (runoffprob * PerdueRunoff))*100
 finalNunn <- (NunnProb + (runoffprob * NunnRunoff))*100
 
+# Create row for primary
+primary <- subset(allstates, state=="GA")
+primary$state <- "GA-primary"
+primary$finalprob <- subset(allstates, state=="GA")$finalprob
+primary$pollprob <- subset(allstates, state=="GA")$pollprob
+allstates <- rbind(allstates, primary)
+
 allstates$finalprob[allstates$state=="GA" & allstates$call=="D"] <- finalNunn
 allstates$finalprob[allstates$state=="GA" & allstates$call=="R"] <- finalPerdue
 
-#kick runoff row out so it's not considered in model#
-allstates <- subset(allstates, allstates$state != "GAR")
-
+# Add column for runoff %
+allstates$runoff <- ifelse(allstates$state=="GA-primary",runoffprob*100,0)
 
 #write.csv(allstates,"allstates.csv") ##write the whole file only if you need to check everything
 
-outSenate14 <- allstates[, c("state", "call", "finalprob", "pollprob", "democrat", "republican", "numdays")]
+outSenate14 <- allstates[, c("state", "call", "finalprob", "pollprob", "democrat", "republican", "numdays", "runoff")]
 write.csv(outSenate14, "post/outSenate14.csv")
 write.csv(outSenate14, paste("post/outSenate14_",today,".csv",sep=""))
 if (file.exists("/var/www/html/elections")) {
