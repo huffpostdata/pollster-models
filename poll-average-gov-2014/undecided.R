@@ -9,6 +9,14 @@ outAK <- subset(outAK, date2>today)
 outAK$state<-"AK"
 write.csv(outAK, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-alabama-governor-bentley-vs-griffith'
+outAL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outAL <- outAL[min(grep("Undecided",outAL$who)):nrow(outAL),]
+outAL$date2 <- as.Date(outAL$date, format="%Y-%m-%d")
+outAL <- subset(outAL, date2>today)
+outAL$state<-"AL"
+write.csv(outAL, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-arizona-governor-ducey-vs-duval'
 outAZ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outAZ <- outAZ[min(grep("Undecided",outAZ$who)):nrow(outAZ),]
@@ -249,6 +257,14 @@ outTX <- subset(outTX, date2>today)
 outTX$state<-"TX"
 write.csv(outTX, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-vermont-governor-milne-vs-shumlin'
+outVT <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outVT <- outVT[min(grep("Undecided",outVT$who)):nrow(outVT),]
+outVT$date2 <- as.Date(outVT$date, format="%Y-%m-%d")
+outVT <- subset(outVT, date2>today)
+outVT$state<-"VT"
+write.csv(outVT, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-wisconsin-governor-walker-vs-burke'
 outWI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outWI <- outWI[min(grep("Undecided",outWI$who)):nrow(outWI),]
@@ -257,7 +273,13 @@ outWI <- subset(outWI, date2>today)
 outWI$state<-"WI"
 write.csv(outWI, file=paste('post/und/',chart,'.csv',sep=''))
 
-
+chart <- '2014-wyoming-governor'
+outWY <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outWY <- outWY[min(grep("Undecided",outWY$who)):nrow(outWY),]
+outWY$date2 <- as.Date(outWY$date, format="%Y-%m-%d")
+outWY <- subset(outWY, date2>today)
+outWY$state<-"WY"
+write.csv(outWY, file=paste('post/und/',chart,'.csv',sep=''))
 
 ####Merge files into one#####
 filenames <- list.files(path="post/und/", pattern='2014.*csv', full.names=TRUE)
