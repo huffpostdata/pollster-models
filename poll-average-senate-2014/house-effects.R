@@ -255,6 +255,15 @@ houseOR$republican<-"Wehby"
 houseOR$direction<-ifelse(houseOR$who=="Merkley minus Wehby","Democrat positive", "Republican positive")
 write.csv(houseOR, file=paste('house/',chart,'.csv',sep=''))
 
+chart <- '2014-rhode-island-senate-zaccaria-vs-reed'
+houseRI <- read.csv(paste(dataDir,chart,'/house.csv',sep=''))
+houseRI <- houseRI[min(grep("minus",houseRI$who)):nrow(houseRI),]
+houseRI$state<-"RI"
+houseRI$democrat<-"Reed"
+houseRI$republican<-"Zaccaria"
+houseRI$direction<-ifelse(houseRI$who=="Reed minus Zaccaria","Democrat positive", "Republican positive")
+write.csv(houseRI, file=paste('house/',chart,'.csv',sep=''))
+
 chart <- '2014-south-carolina-senate-graham-vs-hutto'
 houseSC1 <- read.csv(paste(dataDir,chart,'/nathouse.csv',sep=''))
 houseSC1 <- houseSC1[min(grep("minus",houseSC1$who)):nrow(houseSC1),]
