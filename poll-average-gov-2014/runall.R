@@ -30,6 +30,7 @@ charts <- c(
   '2014-rhode-island-governor-fung-vs-raimondo',
   '2014-south-carolina-governor-haley-vs-sheheen',
   '2014-south-dakota-governor-daugaard-vs-wismer',
+  '2014-tennessee-governor-haslam-vs-brown',
   '2014-texas-governor-abbott-vs-davis',
   '2014-vermont-governor-milne-vs-shumlin',
   '2014-wisconsin-governor-walker-vs-burke',
