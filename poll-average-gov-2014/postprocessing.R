@@ -492,18 +492,18 @@ alldata$date<-NULL ##deletes duplicate date column (date2 is in date format)
 write.csv(alldata,"post/alldata.csv")
 
 ##Take only last row from each state
-pollstates <- alldata[which(alldata$date2=="2014-11-04"),]
-write.csv(pollstates,"post/pollstates.csv")
+allstates <- alldata[which(alldata$date2=="2014-11-04"),]
+write.csv(allstates,"post/allstates.csv")
 
 ##Get undecided info for adjustment below
 source("undecided.R")
 
 ##merge with nopolls-states.csv
-nopollstates <- read.csv("nopolls-states.csv")
-nopollstates$numdays <- electionday - today
-nopollstates$date2 <- "2014-11-04"
-allstates <- rbind(pollstates, nopollstates)
-write.csv(allstates,"post/allstates.csv")
+#nopollstates <- read.csv("nopolls-states.csv")
+#nopollstates$numdays <- electionday - today
+#nopollstates$date2 <- "2014-11-04"
+#allstates <- rbind(pollstates, nopollstates)
+#write.csv(allstates,"post/allstates.csv")
 
 #make sure prob is numeric
 allstates$prob <- as.numeric(allstates$prob)
