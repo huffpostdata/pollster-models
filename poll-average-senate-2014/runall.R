@@ -25,6 +25,7 @@ charts <- c(
   '2014-oklahoma-senate-inhofe-vs-silverstein',
   '2014-oklahoma-senate-lankford-vs-johnson',
   '2014-oregon-senate-wehby-vs-merkley',
+  '2014-rhode-island-senate-zaccaria-vs-reed',
   '2014-south-carolina-senate-graham-vs-hutto',
   '2014-south-carolina-senate-scott-vs-dickerson',
   '2014-south-dakota-senate-rounds-vs-weiland',
