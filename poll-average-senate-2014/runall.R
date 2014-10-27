@@ -2,6 +2,7 @@ charts <- c(
   '2014-alaska-senate-sullivan-vs-begich',
   '2014-arkansas-senate-cotton-vs-pryor',
   '2014-colorado-senate-gardner-vs-udall',
+  '2014-delaware-senate-wade-vs-coons',
   '2014-georgia-senate-perdue-vs-nunn',
   '2014-hawaii-senate-cavasso-vs-schatz',
   '2014-illinois-senate-oberweis-vs-durbin',
@@ -15,11 +16,14 @@ charts <- c(
   '2014-michigan-senate-land-vs-peters',
   '2014-minnesota-senate-mcfadden-vs-franken',
   '2014-mississippi-senate-cochran-vs-childers',
+  '2014-montana-senate-daines-vs-curtis',
   '2014-nebraska-senate-sasse-vs-domina',
   '2014-north-carolina-senate-tillis-vs-hagan',
   '2014-new-hampshire-senate-brown-vs-shaheen',
   '2014-new-jersey-senate-bell-vs-booker',
   '2014-new-mexico-senate-weh-vs-udall',
+  '2014-oklahoma-senate-inhofe-vs-silverstein',
+  '2014-oklahoma-senate-lankford-vs-johnson',
   '2014-oregon-senate-wehby-vs-merkley',
   '2014-south-carolina-senate-graham-vs-hutto',
   '2014-south-carolina-senate-scott-vs-dickerson',
@@ -27,7 +31,8 @@ charts <- c(
   '2014-tennessee-senate-alexander-vs-ball',
   '2014-texas-senate-cornyn-vs-alameel',
   '2014-virginia-senate-gillespie-vs-warner',
-  '2014-west-virginia-senate-capito-vs-tennant'
+  '2014-west-virginia-senate-capito-vs-tennant',
+  '2014-wyoming-senate'
 )
 
 for (c in charts) {
