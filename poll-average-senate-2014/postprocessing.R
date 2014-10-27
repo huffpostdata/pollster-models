@@ -366,6 +366,19 @@ outOR$numdays <- electionday - today
 outOR$numpolls <- 0
 write.csv(outOR, file=paste('post/',chart,'.csv',sep=''))
 
+chart <- '2014-rhode-island-senate-zaccaria-vs-reed'
+outRI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outRI <- outRI[min(grep("minus",outRI$who)):nrow(outRI),]
+outRI$date2 <- as.Date(outRI$date, format="%Y-%m-%d")
+outRI <- subset(outRI, date2>today)
+outRI$state<-"RI"
+outRI$democrat<-"Reed"
+outRI$republican<-"Zaccaria"
+outRI$lead<-ifelse(outRI$who=="Reed minus Zaccaria","Democrat lead", "Republican lead")
+outRI$numdays <- electionday - today
+outRI$numpolls <- 0
+write.csv(outRI, file=paste('post/',chart,'.csv',sep=''))
+
 chart <- '2014-south-carolina-senate-graham-vs-hutto'
 outSC1 <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSC1 <- outSC1[min(grep("minus",outSC1$who)):nrow(outSC1),]
