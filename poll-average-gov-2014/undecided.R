@@ -249,6 +249,14 @@ outSD <- subset(outSD, date2>today)
 outSD$state<-"SD"
 write.csv(outSD, file=paste('post/und/',chart,'.csv',sep=''))
 
+chart <- '2014-tennessee-governor-haslam-vs-brown'
+outTN <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outTN <- outTN[min(grep("Undecided",outTN$who)):nrow(outTN),]
+outTN$date2 <- as.Date(outTN$date, format="%Y-%m-%d")
+outTN <- subset(outTN, date2>today)
+outTN$state<-"TN"
+write.csv(outTN, file=paste('post/und/',chart,'.csv',sep=''))
+
 chart <- '2014-texas-governor-abbott-vs-davis'
 outTX <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outTX <- outTX[min(grep("Undecided",outTX$who)):nrow(outTX),]
