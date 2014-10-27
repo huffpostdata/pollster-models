@@ -12,7 +12,7 @@ today <- as.Date(Sys.time(),tz="America/New_York")
 electionday <- as.Date("2014-11-04")
 
 ##repeat over all states##
-##no polls states to be added as needed: AL, HI, ID, NE, NV, OK, RI, SD, TN, VT, WY
+##no polls states to be added as needed: TN
 
 ##import data, put in correct format##
 chart <- '2014-alaska-governor-parnell-vs-walker'
@@ -27,6 +27,19 @@ outAK$lead<-ifelse(outAK$who=="Walker minus Parnell","Independent lead", "Republ
 outAK$numdays <- electionday - today #code number of days to election
 outAK$numpolls <- 0
 write.csv(outAK, file=paste('post/',chart,'.csv',sep='')) ##save file for merging later
+
+chart <- '2014-alabama-governor-bentley-vs-griffith'
+outAL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outAL <- outAL[min(grep("minus",outAL$who)):nrow(outAL),] #this tells it to only import the "minus" data--which has the probability associated
+outAL$date2 <- as.Date(outAL$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
+outAL <- subset(outAL, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outAL$state<-"AL"
+outAL$democrat<-"Griffith"
+outAL$republican<-"Bentley"
+outAL$lead<-ifelse(outAL$who=="Griffith minus Bentley","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
+outAL$numdays <- electionday - today #code number of days to election
+outAL$numpolls <- 0
+write.csv(outAL, file=paste('post/',chart,'.csv',sep='')) ##save file for merging later
 
 chart <- '2014-arizona-governor-ducey-vs-duval'
 outAZ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
@@ -418,6 +431,19 @@ outTX$numdays <- electionday - today #code number of days to election
 outTX$numpolls <- 0
 write.csv(outTX, file=paste('post/',chart,'.csv',sep=''))
 
+chart <- '2014-vermont-governor-milne-vs-shumlin'
+outVT <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outVT <- outVT[min(grep("minus",outVT$who)):nrow(outVT),] #this tells it to only import the "minus" data--which has the probability associated
+outVT$date2 <- as.Date(outVT$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
+outVT <- subset(outVT, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outVT$state<-"VT"
+outVT$democrat<- "Shumlin"
+outVT$republican<-"Milne"
+outVT$lead<-ifelse(outVT$who=="Shumlin minus Milne","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
+outVT$numdays <- electionday - today #code number of days to election
+outVT$numpolls <- 0
+write.csv(outVT, file=paste('post/',chart,'.csv',sep=''))
+
 chart <- '2014-wisconsin-governor-walker-vs-burke'
 outWI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outWI <- outWI[min(grep("minus",outWI$who)):nrow(outWI),] #this tells it to only import the "minus" data--which has the probability associated
@@ -430,6 +456,19 @@ outWI$lead<-ifelse(outWI$who=="Burke minus Walker","Democrat lead", "Republican 
 outWI$numdays <- electionday - today #code number of days to election
 outWI$numpolls <- 0
 write.csv(outWI, file=paste('post/',chart,'.csv',sep=''))
+
+chart <- '2014-wyoming-governor'
+outWY <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
+outWY <- outWY[min(grep("minus",outWY$who)):nrow(outWY),] #this tells it to only import the "minus" data--which has the probability associated
+outWY$date2 <- as.Date(outWY$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
+outWY <- subset(outWY, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outWY$state<-"WY"
+outWY$democrat<- "Gosar"
+outWY$republican<-"Mead"
+outWY$lead<-ifelse(outWY$who=="Gosar minus Mead","Democrat lead", "Republican lead") ##code whether probability shows Dem lead or Rep lead
+outWY$numdays <- electionday - today #code number of days to election
+outWY$numpolls <- 0
+write.csv(outWY, file=paste('post/',chart,'.csv',sep=''))
 
 ####Merge files into one#####
 filenames <- list.files(path="post/", pattern='^2014.*csv', full.names=TRUE)
