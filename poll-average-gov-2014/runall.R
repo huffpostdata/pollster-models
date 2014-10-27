@@ -1,5 +1,6 @@
 charts <- c(
   '2014-alaska-governor-parnell-vs-walker',
+  '2014-alabama-governor-bentley-vs-griffith',
   '2014-arizona-governor-ducey-vs-duval',
   '2014-arkansas-governor-hutchinson-vs-ross',
   '2014-california-governor-kashkari-vs-brown',
@@ -30,7 +31,9 @@ charts <- c(
   '2014-south-carolina-governor-haley-vs-sheheen',
   '2014-south-dakota-governor-daugaard-vs-wismer',
   '2014-texas-governor-abbott-vs-davis',
-  '2014-wisconsin-governor-walker-vs-burke'
+  '2014-vermont-governor-milne-vs-shumlin',
+  '2014-wisconsin-governor-walker-vs-burke',
+  '2014-wyoming-governor'
 )
 
 for (c in charts) {
