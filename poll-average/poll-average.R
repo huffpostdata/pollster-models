@@ -21,6 +21,7 @@ data <- read.csv(file=url)
 otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation")
 others <- c("Other","Undecided","Not Voting","Not.Voting","Refused","Wouldn't Vote","Wouldn.t.Vote","None")
 theCandidates <- setdiff(setdiff(colnames(data), others), otherCols)
+allChoices <- setdiff(colnames(data), otherCols)
 
 ## contrasts we want
 theContrasts <- list(theCandidates[1:2])
@@ -58,6 +59,11 @@ if(any(nobs.bad)){
 }
 data$nobs <- nobs
 rm(nobs)
+
+# change zeroes to NA
+for (choice in allChoices) {
+  data[[choice]] <- ifelse(data[[choice]]==0, NA, data[[choice]])
+}
 
 ## pollsters and pops
 data$pp <- paste(data$Pollster,data$Population,sep=":")
