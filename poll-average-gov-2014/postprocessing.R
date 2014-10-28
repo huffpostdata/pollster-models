@@ -544,6 +544,5 @@ if (file.exists("/var/www/html/elections")) {
   system(paste("mkdir -p /var/www/html/pollster/shared/models/",today,"/post",sep=""))
   system(paste("cp post/2014-*.csv /var/www/html/pollster/shared/models/",today,"/post/",sep=""))
   system(paste("cp post/all*.csv /var/www/html/pollster/shared/models/",today,"/post/",sep=""))
-  system(paste("cp post/pollstates.csv /var/www/html/pollster/shared/models/",today,"/post/",sep=""))
   system(paste("cp post/outGovernors14.csv /var/www/html/pollster/shared/models/",today,"/post/",sep=""))
 }
