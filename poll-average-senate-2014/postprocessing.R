@@ -19,7 +19,7 @@ chart <- '2014-alaska-senate-sullivan-vs-begich'
 outAK <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outAK <- outAK[min(grep("minus",outAK$who)):nrow(outAK),] #this tells it to only import the "minus" data--which has the probability associated
 outAK$date2 <- as.Date(outAK$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outAK <- subset(outAK, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outAK <- subset(outAK, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outAK$state<-"AK"
 outAK$democrat<-"Begich"
 outAK$republican<-"Sullivan"
@@ -32,7 +32,7 @@ chart <- '2014-arkansas-senate-cotton-vs-pryor'
 outAR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outAR <- outAR[min(grep("minus",outAR$who)):nrow(outAR),]
 outAR$date2 <- as.Date(outAR$date, format="%Y-%m-%d")
-outAR <- subset(outAR, date2>today)
+outAR <- subset(outAR, date2>=today)
 outAR$state<-"AR"
 outAR$democrat<-"Pryor"
 outAR$republican<-"Cotton"
@@ -45,7 +45,7 @@ chart <- '2014-colorado-senate-gardner-vs-udall'
 outCO <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outCO <- outCO[min(grep("minus",outCO$who)):nrow(outCO),]
 outCO$date2 <- as.Date(outCO$date, format="%Y-%m-%d")
-outCO <- subset(outCO, date2>today)
+outCO <- subset(outCO, date2>=today)
 outCO$state<-"CO"
 outCO$democrat<-"Udall"
 outCO$republican<-"Gardner"
@@ -58,7 +58,7 @@ chart <- '2014-delaware-senate-wade-vs-coons'
 outDE <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outDE <- outDE[min(grep("minus",outDE$who)):nrow(outDE),]
 outDE$date2 <- as.Date(outDE$date, format="%Y-%m-%d")
-outDE <- subset(outDE, date2>today)
+outDE <- subset(outDE, date2>=today)
 outDE$state<-"DE"
 outDE$democrat<-"Coons"
 outDE$republican<-"Wade"
@@ -71,7 +71,7 @@ chart <- '2014-georgia-senate-perdue-vs-nunn'
 outGA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outGA <- outGA[min(grep("minus",outGA$who)):nrow(outGA),]
 outGA$date2 <- as.Date(outGA$date, format="%Y-%m-%d")
-outGA <- subset(outGA, date2>today)
+outGA <- subset(outGA, date2>=today)
 outGA$state<-"GA"
 outGA$democrat<-"Nunn"
 outGA$republican<-"Perdue"
@@ -84,7 +84,7 @@ chart <- '2014-georgia-senate-runoff'
 outGAR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outGAR <- outGAR[min(grep("minus",outGAR$who)):nrow(outGAR),]
 outGAR$date2 <- as.Date(outGAR$date, format="%Y-%m-%d")
-outGAR <- subset(outGAR, date2>today)
+outGAR <- subset(outGAR, date2>=today)
 outGAR$state<-"GA-runoff"
 outGAR$democrat<-"Nunn"
 outGAR$republican<-"Perdue"
@@ -97,7 +97,7 @@ chart <- '2014-hawaii-senate-cavasso-vs-schatz'
 outHI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outHI <- outHI[min(grep("minus",outHI$who)):nrow(outHI),]
 outHI$date2 <- as.Date(outHI$date, format="%Y-%m-%d")
-outHI <- subset(outHI, date2>today)
+outHI <- subset(outHI, date2>=today)
 outHI$state<-"HI"
 outHI$democrat<-"Schatz"
 outHI$republican<-"Cavasso"
@@ -110,7 +110,7 @@ chart <- '2014-iowa-senate-ernst-vs-braley'
 outIA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outIA <- outIA[min(grep("minus",outIA$who)):nrow(outIA),]
 outIA$date2 <- as.Date(outIA$date, format="%Y-%m-%d")
-outIA <- subset(outIA, date2>today)
+outIA <- subset(outIA, date2>=today)
 outIA$state<-"IA"
 outIA$democrat<-"Braley"
 outIA$republican<-"Ernst"
@@ -123,7 +123,7 @@ chart <- '2014-idaho-senate-risch-vs-mitchell'
 outID <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outID <- outID[min(grep("minus",outID$who)):nrow(outID),]
 outID$date2 <- as.Date(outID$date, format="%Y-%m-%d")
-outID <- subset(outID, date2>today)
+outID <- subset(outID, date2>=today)
 outID$state<-"ID"
 outID$democrat<-"Mitchell"
 outID$republican<-"Risch"
@@ -136,7 +136,7 @@ chart <- '2014-illinois-senate-oberweis-vs-durbin'
 outIL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outIL <- outIL[min(grep("minus",outIL$who)):nrow(outIL),]
 outIL$date2 <- as.Date(outIL$date, format="%Y-%m-%d")
-outIL <- subset(outIL, date2>today)
+outIL <- subset(outIL, date2>=today)
 outIL$state<-"IL"
 outIL$democrat<-"Durbin"
 outIL$republican<-"Oberweis"
@@ -149,7 +149,7 @@ chart <- '2014-kansas-senate-roberts-vs-orman-vs-taylor'
 outKS <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outKS <- outKS[min(grep("minus",outKS$who)):nrow(outKS),]
 outKS$date2 <- as.Date(outKS$date, format="%Y-%m-%d")
-outKS <- subset(outKS, date2>today)
+outKS <- subset(outKS, date2>=today)
 outKS$state<-"KS"
 outKS$democrat<-"Orman"
 outKS$republican<-"Roberts"
@@ -162,7 +162,7 @@ chart <- '2014-kentucky-senate-mcconnell-vs-grimes'
 outKY <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outKY <- outKY[min(grep("minus",outKY$who)):nrow(outKY),]
 outKY$date2 <- as.Date(outKY$date, format="%Y-%m-%d")
-outKY <- subset(outKY, date2>today)
+outKY <- subset(outKY, date2>=today)
 outKY$state<-"KY"
 outKY$democrat<-"Grimes"
 outKY$republican<-"McConnell"
@@ -175,7 +175,7 @@ chart <- '2014-louisiana-senate-cassidy-vs-landrieu'
 outLA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outLA <- outLA[min(grep("minus",outLA$who)):nrow(outLA),]
 outLA$date2 <- as.Date(outLA$date, format="%Y-%m-%d")
-outLA <- subset(outLA, date2>today)
+outLA <- subset(outLA, date2>=today)
 outLA$state<-"LA"
 outLA$democrat<-"Landrieu"
 outLA$republican<-"Cassidy"
@@ -188,7 +188,7 @@ chart <- '2014-maine-senate-collins-vs-bellows'
 outME <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outME <- outME[min(grep("minus",outME$who)):nrow(outME),]
 outME$date2 <- as.Date(outME$date, format="%Y-%m-%d")
-outME <- subset(outME, date2>today)
+outME <- subset(outME, date2>=today)
 outME$state<-"ME"
 outME$democrat<-"Bellows"
 outME$republican<-"Collins"
@@ -201,7 +201,7 @@ chart <- '2014-massachusetts-senate-herr-vs-markey'
 outMA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMA <- outMA[min(grep("minus",outMA$who)):nrow(outMA),]
 outMA$date2 <- as.Date(outMA$date, format="%Y-%m-%d")
-outMA <- subset(outMA, date2>today)
+outMA <- subset(outMA, date2>=today)
 outMA$state<-"MA"
 outMA$democrat<-"Markey"
 outMA$republican<-"Herr"
@@ -214,7 +214,7 @@ chart <- '2014-michigan-senate-land-vs-peters'
 outMI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMI <- outMI[min(grep("minus",outMI$who)):nrow(outMI),]
 outMI$date2 <- as.Date(outMI$date, format="%Y-%m-%d")
-outMI <- subset(outMI, date2>today)
+outMI <- subset(outMI, date2>=today)
 outMI$state<-"MI"
 outMI$democrat<-"Peters"
 outMI$republican<-"Land"
@@ -227,7 +227,7 @@ chart <- '2014-minnesota-senate-mcfadden-vs-franken'
 outMN <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMN <- outMN[min(grep("minus",outMN$who)):nrow(outMN),]
 outMN$date2 <- as.Date(outMN$date, format="%Y-%m-%d")
-outMN <- subset(outMN, date2>today)
+outMN <- subset(outMN, date2>=today)
 outMN$state<-"MN"
 outMN$democrat<-"Franken"
 outMN$republican<-"McFadden"
@@ -240,7 +240,7 @@ chart <- '2014-mississippi-senate-cochran-vs-childers'
 outMS <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMS <- outMS[min(grep("minus",outMS$who)):nrow(outMS),]
 outMS$date2 <- as.Date(outMS$date, format="%Y-%m-%d")
-outMS <- subset(outMS, date2>today)
+outMS <- subset(outMS, date2>=today)
 outMS$state<-"MS"
 outMS$democrat<-"Childers"
 outMS$republican<-"Cochran"
@@ -253,7 +253,7 @@ chart <- '2014-montana-senate-daines-vs-curtis'
 outMT <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMT <- outMT[min(grep("minus",outMT$who)):nrow(outMT),]
 outMT$date2 <- as.Date(outMT$date, format="%Y-%m-%d")
-outMT <- subset(outMT, date2>today)
+outMT <- subset(outMT, date2>=today)
 outMT$state<-"MT"
 outMT$democrat<-"Curtis"
 outMT$republican<-"Daines"
@@ -266,7 +266,7 @@ chart <- '2014-nebraska-senate-sasse-vs-domina'
 outNE <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNE <- outNE[min(grep("minus",outNE$who)):nrow(outNE),]
 outNE$date2 <- as.Date(outNE$date, format="%Y-%m-%d")
-outNE <- subset(outNE, date2>today)
+outNE <- subset(outNE, date2>=today)
 outNE$state<-"NE"
 outNE$democrat<-"Domina"
 outNE$republican<-"Sasse"
@@ -279,7 +279,7 @@ chart <- '2014-north-carolina-senate-tillis-vs-hagan'
 outNC <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNC <- outNC[min(grep("minus",outNC$who)):nrow(outNC),]
 outNC$date2 <- as.Date(outNC$date, format="%Y-%m-%d")
-outNC <- subset(outNC, date2>today)
+outNC <- subset(outNC, date2>=today)
 outNC$state<-"NC"
 outNC$democrat<-"Hagan"
 outNC$republican<-"Tillis"
@@ -292,7 +292,7 @@ chart <- '2014-new-hampshire-senate-brown-vs-shaheen'
 outNH <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNH <- outNH[min(grep("minus",outNH$who)):nrow(outNH),]
 outNH$date2 <- as.Date(outNH$date, format="%Y-%m-%d")
-outNH <- subset(outNH, date2>today)
+outNH <- subset(outNH, date2>=today)
 outNH$state<-"NH"
 outNH$democrat<-"Shaheen"
 outNH$republican<-"Brown"
@@ -305,7 +305,7 @@ chart <- '2014-new-jersey-senate-bell-vs-booker'
 outNJ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNJ <- outNJ[min(grep("minus",outNJ$who)):nrow(outNJ),]
 outNJ$date2 <- as.Date(outNJ$date, format="%Y-%m-%d")
-outNJ <- subset(outNJ, date2>today)
+outNJ <- subset(outNJ, date2>=today)
 outNJ$state<-"NJ"
 outNJ$democrat<-"Booker"
 outNJ$republican<-"Bell"
@@ -318,7 +318,7 @@ chart <- '2014-new-mexico-senate-weh-vs-udall'
 outNM <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNM <- outNM[min(grep("minus",outNM$who)):nrow(outNM),]
 outNM$date2 <- as.Date(outNM$date, format="%Y-%m-%d")
-outNM <- subset(outNM, date2>today)
+outNM <- subset(outNM, date2>=today)
 outNM$state<-"NM"
 outNM$democrat<-"Udall"
 outNM$republican<-"Weh"
@@ -331,7 +331,7 @@ chart <- '2014-oklahoma-senate-inhofe-vs-silverstein'
 outOK1 <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outOK1 <- outOK1[min(grep("minus",outOK1$who)):nrow(outOK1),]
 outOK1$date2 <- as.Date(outOK1$date, format="%Y-%m-%d")
-outOK1 <- subset(outOK1, date2>today)
+outOK1 <- subset(outOK1, date2>=today)
 outOK1$state<-"OK1"
 outOK1$democrat<-"Silverstein"
 outOK1$republican<-"Inhofe"
@@ -344,7 +344,7 @@ chart <- '2014-oklahoma-senate-lankford-vs-johnson'
 outOK2 <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outOK2 <- outOK2[min(grep("minus",outOK2$who)):nrow(outOK2),]
 outOK2$date2 <- as.Date(outOK2$date, format="%Y-%m-%d")
-outOK2 <- subset(outOK2, date2>today)
+outOK2 <- subset(outOK2, date2>=today)
 outOK2$state<-"OK2"
 outOK2$democrat<-"Johnson"
 outOK2$republican<-"Lankford"
@@ -357,7 +357,7 @@ chart <- '2014-oregon-senate-wehby-vs-merkley'
 outOR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outOR <- outOR[min(grep("minus",outOR$who)):nrow(outOR),]
 outOR$date2 <- as.Date(outOR$date, format="%Y-%m-%d")
-outOR <- subset(outOR, date2>today)
+outOR <- subset(outOR, date2>=today)
 outOR$state<-"OR"
 outOR$democrat<-"Merkley"
 outOR$republican<-"Wehby"
@@ -370,7 +370,7 @@ chart <- '2014-rhode-island-senate-zaccaria-vs-reed'
 outRI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outRI <- outRI[min(grep("minus",outRI$who)):nrow(outRI),]
 outRI$date2 <- as.Date(outRI$date, format="%Y-%m-%d")
-outRI <- subset(outRI, date2>today)
+outRI <- subset(outRI, date2>=today)
 outRI$state<-"RI"
 outRI$democrat<-"Reed"
 outRI$republican<-"Zaccaria"
@@ -383,7 +383,7 @@ chart <- '2014-south-carolina-senate-graham-vs-hutto'
 outSC1 <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSC1 <- outSC1[min(grep("minus",outSC1$who)):nrow(outSC1),]
 outSC1$date2 <- as.Date(outSC1$date, format="%Y-%m-%d")
-outSC1 <- subset(outSC1, date2>today)
+outSC1 <- subset(outSC1, date2>=today)
 outSC1$state<-"SC1"
 outSC1$democrat<-"Hutto"
 outSC1$republican<-"Graham"
@@ -396,7 +396,7 @@ chart <- '2014-south-carolina-senate-scott-vs-dickerson'
 outSC2 <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSC2 <- outSC2[min(grep("minus",outSC2$who)):nrow(outSC2),]
 outSC2$date2 <- as.Date(outSC2$date, format="%Y-%m-%d")
-outSC2 <- subset(outSC2, date2>today)
+outSC2 <- subset(outSC2, date2>=today)
 outSC2$state<-"SC2"
 outSC2$democrat<-"Dickerson"
 outSC2$republican<-"Scott"
@@ -409,7 +409,7 @@ chart <- '2014-south-dakota-senate-rounds-vs-weiland'
 outSD <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSD <- outSD[min(grep("minus",outSD$who)):nrow(outSD),]
 outSD$date2 <- as.Date(outSD$date, format="%Y-%m-%d")
-outSD <- subset(outSD, date2>today)
+outSD <- subset(outSD, date2>=today)
 outSD$state<-"SD"
 outSD$democrat<-"Weiland"
 outSD$republican<-"Rounds"
@@ -422,7 +422,7 @@ chart <- '2014-tennessee-senate-alexander-vs-ball'
 outTN <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outTN <- outTN[min(grep("minus",outTN$who)):nrow(outTN),]
 outTN$date2 <- as.Date(outTN$date, format="%Y-%m-%d")
-outTN <- subset(outTN, date2>today)
+outTN <- subset(outTN, date2>=today)
 outTN$state<-"TN"
 outTN$democrat<-"Ball"
 outTN$republican<-"Alexander"
@@ -435,7 +435,7 @@ chart <- '2014-texas-senate-cornyn-vs-alameel'
 outTX <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outTX <- outTX[min(grep("minus",outTX$who)):nrow(outTX),]
 outTX$date2 <- as.Date(outTX$date, format="%Y-%m-%d")
-outTX <- subset(outTX, date2>today)
+outTX <- subset(outTX, date2>=today)
 outTX$state<-"TX"
 outTX$democrat<-"Alameel"
 outTX$republican<-"Cornyn"
@@ -448,7 +448,7 @@ chart <- '2014-virginia-senate-gillespie-vs-warner'
 outVA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outVA <- outVA[min(grep("minus",outVA$who)):nrow(outVA),]
 outVA$date2 <- as.Date(outVA$date, format="%Y-%m-%d")
-outVA <- subset(outVA, date2>today)
+outVA <- subset(outVA, date2>=today)
 outVA$state<-"VA"
 outVA$democrat<-"Warner"
 outVA$republican<-"Gillespie"
@@ -461,7 +461,7 @@ chart <- '2014-west-virginia-senate-capito-vs-tennant'
 outWV <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outWV <- outWV[min(grep("minus",outWV$who)):nrow(outWV),]
 outWV$date2 <- as.Date(outWV$date, format="%Y-%m-%d")
-outWV <- subset(outWV, date2>today)
+outWV <- subset(outWV, date2>=today)
 outWV$state<-"WV"
 outWV$democrat<-"Tennant"
 outWV$republican<-"Capito"
@@ -474,7 +474,7 @@ chart <- '2014-wyoming-senate'
 outWY <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outWY <- outWY[min(grep("minus",outWY$who)):nrow(outWY),]
 outWY$date2 <- as.Date(outWY$date, format="%Y-%m-%d")
-outWY <- subset(outWY, date2>today)
+outWY <- subset(outWY, date2>=today)
 outWY$state<-"WY"
 outWY$democrat<-"Hardy"
 outWY$republican<-"Enzi"

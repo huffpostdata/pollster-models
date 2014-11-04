@@ -19,7 +19,7 @@ chart <- '2014-alaska-governor-parnell-vs-walker'
 outAK <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outAK <- outAK[min(grep("minus",outAK$who)):nrow(outAK),] #this tells it to only import the "minus" data--which has the probability associated
 outAK$date2 <- as.Date(outAK$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outAK <- subset(outAK, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outAK <- subset(outAK, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outAK$state<-"AK"
 outAK$democrat<-"Walker"
 outAK$republican<-"Parnell"
@@ -32,7 +32,7 @@ chart <- '2014-alabama-governor-bentley-vs-griffith'
 outAL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outAL <- outAL[min(grep("minus",outAL$who)):nrow(outAL),] #this tells it to only import the "minus" data--which has the probability associated
 outAL$date2 <- as.Date(outAL$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outAL <- subset(outAL, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outAL <- subset(outAL, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outAL$state<-"AL"
 outAL$democrat<-"Griffith"
 outAL$republican<-"Bentley"
@@ -45,7 +45,7 @@ chart <- '2014-arizona-governor-ducey-vs-duval'
 outAZ <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outAZ <- outAZ[min(grep("minus",outAZ$who)):nrow(outAZ),] #this tells it to only import the "minus" data--which has the probability associated
 outAZ$date2 <- as.Date(outAZ$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outAZ <- subset(outAZ, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outAZ <- subset(outAZ, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outAZ$state<-"AZ"
 outAZ$democrat<-"DuVal"
 outAZ$republican<-"Ducey"
@@ -58,7 +58,7 @@ chart <- '2014-arkansas-governor-hutchinson-vs-ross'
 outAR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outAR <- outAR[min(grep("minus",outAR$who)):nrow(outAR),] #this tells it to only import the "minus" data--which has the probability associated
 outAR$date2 <- as.Date(outAR$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outAR <- subset(outAR, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outAR <- subset(outAR, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outAR$state<-"AR"
 outAR$democrat<- "Ross"
 outAR$republican<-"Hutchinson"
@@ -71,7 +71,7 @@ chart <- '2014-california-governor-kashkari-vs-brown'
 outCA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outCA <- outCA[min(grep("minus",outCA$who)):nrow(outCA),] #this tells it to only import the "minus" data--which has the probability associated
 outCA$date2 <- as.Date(outCA$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outCA <- subset(outCA, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outCA <- subset(outCA, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outCA$state<-"CA"
 outCA$democrat<- "Brown"
 outCA$republican<-"Kashkari"
@@ -84,7 +84,7 @@ chart <- '2014-colorado-governor-beauprez-vs-hickenlooper'
 outCO <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outCO <- outCO[min(grep("minus",outCO$who)):nrow(outCO),] #this tells it to only import the "minus" data--which has the probability associated
 outCO$date2 <- as.Date(outCO$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outCO <- subset(outCO, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outCO <- subset(outCO, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outCO$state<-"CO"
 outCO$democrat<- "Hickenlooper"
 outCO$republican<-"Beauprez"
@@ -97,7 +97,7 @@ chart <- '2014-connecticut-governor-foley-vs-malloy'
 outCT <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outCT <- outCT[min(grep("minus",outCT$who)):nrow(outCT),] #this tells it to only import the "minus" data--which has the probability associated
 outCT$date2 <- as.Date(outCT$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outCT <- subset(outCT, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outCT <- subset(outCT, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outCT$state<-"CT"
 outCT$democrat<- "Malloy"
 outCT$republican<-"Foley"
@@ -110,7 +110,7 @@ chart <- '2014-florida-governor-scott-vs-crist'
 outFL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outFL <- outFL[min(grep("minus",outFL$who)):nrow(outFL),] #this tells it to only import the "minus" data--which has the probability associated
 outFL$date2 <- as.Date(outFL$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outFL <- subset(outFL, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outFL <- subset(outFL, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outFL$state<-"FL"
 outFL$democrat<- "Crist"
 outFL$republican<-"Scott"
@@ -123,7 +123,7 @@ chart <- '2014-georgia-governor-deal-vs-carter'
 outGA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outGA <- outGA[min(grep("minus",outGA$who)):nrow(outGA),] #this tells it to only import the "minus" data--which has the probability associated
 outGA$date2 <- as.Date(outGA$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outGA <- subset(outGA, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outGA <- subset(outGA, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outGA$state<-"GA"
 outGA$democrat<- "Carter"
 outGA$republican<-"Deal"
@@ -136,7 +136,7 @@ chart <- '2014-hawaii-governor-aiona-vs-ige'
 outHI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outHI <- outHI[min(grep("minus",outHI$who)):nrow(outHI),] #this tells it to only import the "minus" data--which has the probability associated
 outHI$date2 <- as.Date(outHI$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outHI <- subset(outHI, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outHI <- subset(outHI, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outHI$state<-"HI"
 outHI$democrat<-"Ige"
 outHI$republican<-"Aiona"
@@ -149,7 +149,7 @@ chart <- '2014-idaho-governor-otter-vs-balukoff'
 outID <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outID <- outID[min(grep("minus",outID$who)):nrow(outID),] #this tells it to only import the "minus" data--which has the probability associated
 outID$date2 <- as.Date(outID$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outID <- subset(outID, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outID <- subset(outID, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outID$state<-"ID"
 outID$democrat<-"Balukoff"
 outID$republican<-"Otter"
@@ -162,7 +162,7 @@ chart <- '2014-illinois-governor-rauner-vs-quinn'
 outIL <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outIL <- outIL[min(grep("minus",outIL$who)):nrow(outIL),] #this tells it to only import the "minus" data--which has the probability associated
 outIL$date2 <- as.Date(outIL$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outIL <- subset(outIL, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outIL <- subset(outIL, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outIL$state<-"IL"
 outIL$democrat<- "Quinn"
 outIL$republican<-"Rauner"
@@ -175,7 +175,7 @@ chart <- '2014-iowa-governor-branstad-vs-hatch'
 outIA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outIA <- outIA[min(grep("minus",outIA$who)):nrow(outIA),] #this tells it to only import the "minus" data--which has the probability associated
 outIA$date2 <- as.Date(outIA$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outIA <- subset(outIA, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outIA <- subset(outIA, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outIA$state<-"IA"
 outIA$democrat<- "Hatch"
 outIA$republican<-"Branstad"
@@ -188,7 +188,7 @@ chart <- '2014-kansas-governor-brownback-vs-davis'
 outKS <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outKS <- outKS[min(grep("minus",outKS$who)):nrow(outKS),] #this tells it to only import the "minus" data--which has the probability associated
 outKS$date2 <- as.Date(outKS$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outKS <- subset(outKS, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outKS <- subset(outKS, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outKS$state<-"KS"
 outKS$democrat<- "Davis"
 outKS$republican<-"Brownback"
@@ -201,7 +201,7 @@ chart <- '2014-maine-governor-lepage-vs-michaud-vs-cutler'
 outME <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outME <- outME[min(grep("minus",outME$who)):nrow(outME),] #this tells it to only import the "minus" data--which has the probability associated
 outME$date2 <- as.Date(outME$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outME <- subset(outME, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outME <- subset(outME, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outME$state<-"ME"
 outME$democrat<- "Michaud"
 outME$republican<-"LePage"
@@ -214,7 +214,7 @@ chart <- '2014-maryland-governor-hogan-vs-brown'
 outMD <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMD <- outMD[min(grep("minus",outMD$who)):nrow(outMD),] #this tells it to only import the "minus" data--which has the probability associated
 outMD$date2 <- as.Date(outMD$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outMD <- subset(outMD, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outMD <- subset(outMD, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outMD$state<-"MD"
 outMD$democrat<- "Brown"
 outMD$republican<-"Hogan"
@@ -227,7 +227,7 @@ chart <- '2014-massachusetts-governor-baker-vs-coakley'
 outMA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMA <- outMA[min(grep("minus",outMA$who)):nrow(outMA),] #this tells it to only import the "minus" data--which has the probability associated
 outMA$date2 <- as.Date(outMA$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outMA <- subset(outMA, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outMA <- subset(outMA, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outMA$state<-"MA"
 outMA$democrat<- "Coakley"
 outMA$republican<-"Baker"
@@ -240,7 +240,7 @@ chart <- '2014-michigan-governor-snyder-vs-schauer'
 outMI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMI <- outMI[min(grep("minus",outMI$who)):nrow(outMI),] #this tells it to only import the "minus" data--which has the probability associated
 outMI$date2 <- as.Date(outMI$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outMI <- subset(outMI, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outMI <- subset(outMI, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outMI$state<-"MI"
 outMI$democrat<- "Schauer"
 outMI$republican<-"Snyder"
@@ -253,7 +253,7 @@ chart <- '2014-minnesota-governor-dayton-vs-johnson'
 outMN <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outMN <- outMN[min(grep("minus",outMN$who)):nrow(outMN),] #this tells it to only import the "minus" data--which has the probability associated
 outMN$date2 <- as.Date(outMN$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outMN <- subset(outMN, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outMN <- subset(outMN, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outMN$state<-"MN"
 outMN$democrat<- "Dayton"
 outMN$republican<-"Johnson"
@@ -266,7 +266,7 @@ chart <- '2014-nebraska-governor-ricketts-vs-hassebrook'
 outNE <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNE <- outNE[min(grep("minus",outNE$who)):nrow(outNE),] #this tells it to only import the "minus" data--which has the probability associated
 outNE$date2 <- as.Date(outNE$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outNE <- subset(outNE, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outNE <- subset(outNE, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outNE$state<-"NE"
 outNE$democrat<- "Hassebrook"
 outNE$republican<-"Ricketts"
@@ -279,7 +279,7 @@ chart <- '2014-new-hampshire-governor-havenstein-vs-hassan'
 outNH <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNH <- outNH[min(grep("minus",outNH$who)):nrow(outNH),] #this tells it to only import the "minus" data--which has the probability associated
 outNH$date2 <- as.Date(outNH$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outNH <- subset(outNH, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outNH <- subset(outNH, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outNH$state<-"NH"
 outNH$democrat<- "Hassan"
 outNH$republican<-"Havenstein"
@@ -292,7 +292,7 @@ chart <- '2014-new-mexico-governor-martinez-vs-king'
 outNM <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNM <- outNM[min(grep("minus",outNM$who)):nrow(outNM),] #this tells it to only import the "minus" data--which has the probability associated
 outNM$date2 <- as.Date(outNM$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outNM <- subset(outNM, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outNM <- subset(outNM, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outNM$state<-"NM"
 outNM$democrat<- "King"
 outNM$republican<-"Martinez"
@@ -305,7 +305,7 @@ chart <- '2014-nevada-governor-sandoval-vs-goodman'
 outNV <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNV <- outNV[min(grep("minus",outNV$who)):nrow(outNV),] #this tells it to only import the "minus" data--which has the probability associated
 outNV$date2 <- as.Date(outNV$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outNV <- subset(outNV, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outNV <- subset(outNV, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outNV$state<-"NV"
 outNV$democrat<- "Goodman"
 outNV$republican<-"Sandoval"
@@ -318,7 +318,7 @@ chart <- '2014-new-york-governor-astorino-vs-cuomo'
 outNY <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outNY <- outNY[min(grep("minus",outNY$who)):nrow(outNY),] #this tells it to only import the "minus" data--which has the probability associated
 outNY$date2 <- as.Date(outNY$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outNY <- subset(outNY, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outNY <- subset(outNY, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outNY$state<-"NY"
 outNY$democrat<- "Cuomo"
 outNY$republican<-"Astorino"
@@ -331,7 +331,7 @@ chart <- '2014-ohio-governor-kasich-vs-fitzgerald'
 outOH <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outOH <- outOH[min(grep("minus",outOH$who)):nrow(outOH),] #this tells it to only import the "minus" data--which has the probability associated
 outOH$date2 <- as.Date(outOH$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outOH <- subset(outOH, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outOH <- subset(outOH, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outOH$state<-"OH"
 outOH$democrat<- "Fitzgerald"
 outOH$republican<-"Kasich"
@@ -344,7 +344,7 @@ chart <- '2014-oklahoma-governor-fallin-vs-dorman'
 outOK <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outOK <- outOK[min(grep("minus",outOK$who)):nrow(outOK),] #this tells it to only import the "minus" data--which has the probability associated
 outOK$date2 <- as.Date(outOK$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outOK <- subset(outOK, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outOK <- subset(outOK, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outOK$state<-"OK"
 outOK$democrat<- "Dorman"
 outOK$republican<-"Fallin"
@@ -357,7 +357,7 @@ chart <- '2014-oregon-governor-richardson-vs-kitzhaber'
 outOR <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outOR <- outOR[min(grep("minus",outOR$who)):nrow(outOR),] #this tells it to only import the "minus" data--which has the probability associated
 outOR$date2 <- as.Date(outOR$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outOR <- subset(outOR, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outOR <- subset(outOR, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outOR$state<-"OR"
 outOR$democrat<- "Kitzhaber"
 outOR$republican<-"Richardson"
@@ -370,7 +370,7 @@ chart <- '2014-pennsylvania-governor-corbett-vs-wolf'
 outPA <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outPA <- outPA[min(grep("minus",outPA$who)):nrow(outPA),] #this tells it to only import the "minus" data--which has the probability associated
 outPA$date2 <- as.Date(outPA$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outPA <- subset(outPA, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outPA <- subset(outPA, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outPA$state<-"PA"
 outPA$democrat<- "Wolf"
 outPA$republican<-"Corbett"
@@ -383,7 +383,7 @@ chart <- '2014-rhode-island-governor-fung-vs-raimondo'
 outRI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outRI <- outRI[min(grep("minus",outRI$who)):nrow(outRI),] #this tells it to only import the "minus" data--which has the probability associated
 outRI$date2 <- as.Date(outRI$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outRI <- subset(outRI, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outRI <- subset(outRI, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outRI$state<-"RI"
 outRI$democrat<-"Raimondo"
 outRI$republican<-"Fung"
@@ -396,7 +396,7 @@ chart <- '2014-south-carolina-governor-haley-vs-sheheen'
 outSC <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSC <- outSC[min(grep("minus",outSC$who)):nrow(outSC),] #this tells it to only import the "minus" data--which has the probability associated
 outSC$date2 <- as.Date(outSC$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outSC <- subset(outSC, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outSC <- subset(outSC, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outSC$state<-"SC"
 outSC$democrat<- "Sheheen"
 outSC$republican<-"Haley"
@@ -409,7 +409,7 @@ chart <- '2014-south-dakota-governor-daugaard-vs-wismer'
 outSD <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outSD <- outSD[min(grep("minus",outSD$who)):nrow(outSD),] #this tells it to only import the "minus" data--which has the probability associated
 outSD$date2 <- as.Date(outSD$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outSD <- subset(outSD, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outSD <- subset(outSD, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outSD$state<-"SD"
 outSD$democrat<- "Wismer"
 outSD$republican<-"Daugaard"
@@ -422,7 +422,7 @@ chart <- '2014-tennessee-governor-haslam-vs-brown'
 outTN <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outTN <- outTN[min(grep("minus",outTN$who)):nrow(outTN),] #this tells it to only import the "minus" data--which has the probability associated
 outTN$date2 <- as.Date(outTN$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outTN <- subset(outTN, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outTN <- subset(outTN, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outTN$state<-"TN"
 outTN$democrat<- "Brown"
 outTN$republican<-"Haslam"
@@ -435,7 +435,7 @@ chart <- '2014-texas-governor-abbott-vs-davis'
 outTX <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outTX <- outTX[min(grep("minus",outTX$who)):nrow(outTX),] #this tells it to only import the "minus" data--which has the probability associated
 outTX$date2 <- as.Date(outTX$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outTX <- subset(outTX, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outTX <- subset(outTX, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outTX$state<-"TX"
 outTX$democrat<- "Davis"
 outTX$republican<-"Abbott"
@@ -448,7 +448,7 @@ chart <- '2014-vermont-governor-milne-vs-shumlin'
 outVT <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outVT <- outVT[min(grep("minus",outVT$who)):nrow(outVT),] #this tells it to only import the "minus" data--which has the probability associated
 outVT$date2 <- as.Date(outVT$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outVT <- subset(outVT, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outVT <- subset(outVT, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outVT$state<-"VT"
 outVT$democrat<- "Shumlin"
 outVT$republican<-"Milne"
@@ -461,7 +461,7 @@ chart <- '2014-wisconsin-governor-walker-vs-burke'
 outWI <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outWI <- outWI[min(grep("minus",outWI$who)):nrow(outWI),] #this tells it to only import the "minus" data--which has the probability associated
 outWI$date2 <- as.Date(outWI$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outWI <- subset(outWI, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outWI <- subset(outWI, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outWI$state<-"WI"
 outWI$democrat<- "Burke"
 outWI$republican<-"Walker"
@@ -474,7 +474,7 @@ chart <- '2014-wyoming-governor'
 outWY <- read.csv(paste(dataDir,chart,'/out.csv',sep=''))
 outWY <- outWY[min(grep("minus",outWY$who)):nrow(outWY),] #this tells it to only import the "minus" data--which has the probability associated
 outWY$date2 <- as.Date(outWY$date, format="%Y-%m-%d") #date read in as a factor, convert to date for subsetting
-outWY <- subset(outWY, date2>today) #deletes rows prior to today so that all files will have the same number of rows
+outWY <- subset(outWY, date2>=today) #deletes rows prior to today so that all files will have the same number of rows
 outWY$state<-"WY"
 outWY$democrat<- "Gosar"
 outWY$republican<-"Mead"
