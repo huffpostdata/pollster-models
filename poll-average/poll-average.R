@@ -17,6 +17,17 @@ data <- read.csv(file=url)
 ## data preperation for jags
 #############################
 
+#Delete subpopulations data
+data <- data[!data$Population == "Registered Voters - Democrat", ]
+data <- data[!data$Population =="Registered Voters - Republican", ]
+data <- data[!data$Population =="Registered Voters - independent", ]
+data <- data[!data$Population == "Likely Voters - Democrat", ]
+data <- data[!data$Population =="Likely Voters - Republican", ]
+data <- data[!data$Population =="Likely Voters - independent", ]
+data <- data[!data$Population == "Adults - Democrat", ]
+data <- data[!data$Population =="Adults - Republican", ]
+data <- data[!data$Population =="Adults - independent", ]
+
 ## who are the candidates?
 otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation")
 others <- c("Other","Undecided","Not Voting","Not.Voting","Refused","Wouldn't Vote","Wouldn.t.Vote","None")
