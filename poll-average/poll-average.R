@@ -7,11 +7,11 @@
 suppressPackageStartupMessages(c(library('coda'),library('rjags')))
 options(stringsAsFactors=FALSE)
 args <- commandArgs(TRUE)
-chart <- args[1]
+base_url <- args[1]
+chart <- args[2]
 
 ## url to the pollster csv
-url <- paste("http://elections.huffingtonpost.com/pollster/",chart,".csv",sep="")
-data <- read.csv(file=url)
+data <- read.csv(file=url(paste0(base_url,"/",chart,".csv")))
 
 #############################
 ## data preperation for jags
@@ -80,15 +80,9 @@ for (choice in allChoices) {
 data$pp <- paste(data$Pollster,data$Population,sep=":")
 thePollsters <- sort(unique(data$pp))
 
-if (file.exists("/var/www/html/pollster")) {
-  dataDir <- paste("/var/www/html/pollster/shared/models/",chart,sep="")
-  M <- 100E3                ## number of MCMC iterates
-  keep <- if (NDAYS > 600) 1E3 else 5E3
-} else {
-  dataDir <- paste("data/",chart,sep="")
-  M <- 1E3                  ## number of MCMC iterates
-  keep <- 1E3               ## how many to keep
-}
+dataDir <- paste0("data/",chart)
+M <- 1E3                  ## number of MCMC iterates
+keep <- 1E3               ## how many to keep
 dir.create(dataDir, showWarnings=FALSE, recursive=TRUE)
 
 thin <- M/keep            ## thinning interval
@@ -230,8 +224,8 @@ for(who in theResponses){
                         n.iter=M,thin=thin)
 
     ## save output
-    fname <- paste(dataDir,'/',gsub(paste(who,collapse=""),pattern=" ",replacement=""),
-                   ".jags.RData",sep="")
+    fname <- paste0(dataDir,'/',gsub(paste(who,collapse=""),pattern=" ",replacement=""),
+                    ".jags.RData")
     save("data","dateSeq","firstDay",
          "forJags","out",
          file=fname)

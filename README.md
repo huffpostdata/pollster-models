@@ -2,67 +2,65 @@
 
 This repository contains code used by HuffPost Pollster models and forecasts.
 
-## Model Descriptions
+# Setup
 
-### poll-average
-
-The initial poll averaging model, written by Simon Jackman for the 2013 Virginia Governor's race, and generalized to any race by Jay Boice.
-
-	> Rscript poll-average.R '2013-virginia-governor-cuccinelli-vs-mcauliffe'
-
-### poll-average-senate-2014
-
-Natalie Jackson's forecast for the 2014 Senate elections, based on `poll-average`, with improvements including…
-
-	> Rscript runall.R
-	
-### poll-average-gov-2014
-
-Natalie Jackson's forecast for the 2014 Gubenatorial elections, based on `poll-average`, with improvements including...
-
-	> Rscript runall.R
-
-### poll-average-new
-
-A generalized version of the improvements made for the 2014 Senate/Gubenatorial elections, currently running on the 2014 National House Race chart.
-
-	> Rscript poll-average-new.R '2014-national-house-race'
-
-## Installation
-
-### OSX
+## Mac OS X
 
 Using [Homebrew](http://brew.sh/):
 
-	brew tap homebrew/science
-	brew install r
-	brew install jags
-	
-	R
-	> install.packages("rjags")
-	> install.packages("truncnorm")
-	> install.packages("rjson")
+```sh
+brew tap homebrew/science
+brew install r
+brew install jags
+brew install curl
+R --vanilla -e 'install.packages(c("rjags", "truncnorm", "coda", "httr"), repos=c("https://cloud.r-project.org/"))'
+```
 
-### Windows
+## Windows
 
-### CentOS
+Really? No.
 
-	sudo yum -y install libXt-devel.x86_64 libX11-devel.x86_64 libpng-devel.x86_64 xorg-x11-xtrans-devel.x86_64 libXtst-devel.x86_64 gcc44-c++.x86_64 gcc-gfortran.x86_64 gcc44-gfortran.x86_64 readline-devel.x86_64 gcc-c++.x86_64 g++ compat-gcc-34-g77.x86_64
-	wget http://lib.stat.cmu.edu/R/CRAN/src/base/R-3/R-3.0.2.tar.gz
-	tar -zxvf R-3.0.2.tar.gz && cd R-3.0.2 && ./configure && make && sudo make install
-	sudo cp /usr/local/bin/R /usr/bin/
-	sudo cp /usr/local/bin/Rscript /usr/bin/
-	sudo yum -y install lapack.x86_64 lapack-devel.x86_64 blas.x86_64 blas-devel.x86_64
-	wget http://downloads.sourceforge.net/project/mcmc-jags/JAGS/3.x/Source/JAGS-3.4.0.tar.gz
-	tar -zxvf JAGS-3.4.0.tar.gz && cd JAGS-3.4.0 && ./configure --libdir=/usr/local/lib64 && make && sudo make install
-	
-	R
-	> install.packages("rjags")
-	> install.packages("truncnorm")
-	> install.packages("rjson")
+## Linux: CentOS
+
+```bash
+wget http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+(cd /etc/yum.repos.d && sudo wget 'http://download.opensuse.org/repositories/home:/cornell_vrdc/CentOS_CentOS-6/home:cornell_vrdc.repo')
+sudo rpm -ivh epel-release-6-8.noarch.rpm
+sudo yum install R R-devel jags4-devel curl-devel
+R --vanilla -e 'install.packages(c("rjags", "truncnorm", "coda", "httr"), repos=c("https://cloud.r-project.org/"))'
+```
+
+# Usage
+
+```sh
+cd poll-average
+Rscript --vanilla ./poll-average.R http://production-elections-internal.use1.huffpo.net/pollster 2016-new-hampshire-ayotte-vs-hassan
+```
+
+This will:
+
+1. GET http://production-elections-internal.use1.huffpo.net/pollster/2016-new-hampshire-ayotte-vs-hassan.csv
+2. Calculate predictions for all days
+3. POST predictions to `http://production-elections-internal.use1.huffpo.net/pollster/api/charts/2016-new-hampshire-ayotte-vs-hassan/model-output.csv`
+4. POST house effects to `http://production-elections-internal.use1.huffpo.net/pollster/api/charts/2016-new-hampshire-ayotte-vs-hassan/model-output.csv`
+
+This doesn't use auth. Obviously, it won't work over the Internet: it'll only
+work on our VPN. (That's why we're not panicking about _not_ using HTTPS.)
+
+# Code structure
+
+Clearly, the important code is in `poll-average/`. The entrypoint is
+`poll-average/poll-average.R`.
+
+Other code is in `cruft/`:
+
+* `cruft/poll-average-senate-2014/runall.R`: Natalie Jackson's forecast for the 2014 Senate elections.
+* `cruft/poll-avarage-gov-2014/runall.R`: Natalie Jackson's forecast for the 2014 Gubenatorial elections.
+* `cruft/poll-average-new/poll-average-new.R`: A generalized version of the improvements made for the 2014 Senate/Gubenatorial elections, currently running on the 2014 National House Race chart.
 
 ## Authors
 
+* Adam Hooper <adam.hooper@huffingtonpost.com>
 * Natalie Jackson <natalie.jackson@huffingtonpost.com>
 * Simon Jackman <jackman@stanford.edu>
 * Jay Boice <jay.boice@huffingtonpost.com>

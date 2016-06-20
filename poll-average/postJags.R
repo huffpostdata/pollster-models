@@ -31,7 +31,7 @@ postProcess <- function(fname){
     ylims <- range(c(as.vector(xi[s,,]),
                      forJags$y))
 if (FALSE) {
-    gname <- paste(paste(who,collapse=""),".pdf",sep="")
+    gname <- paste0(paste(who,collapse=""),".pdf")
     quartz(file=gname,
            type="pdf",
            bg="white")
@@ -145,7 +145,7 @@ combine <- function(tmp){
                              function(x)x/sum(x,na.rm=TRUE)*100)
     rm(tmpArray)   ## give back some memory
     tmpArray <- aperm(tmpArray.renorm,perm=c(2,3,4,1))
-    save("tmpArray",file=paste(dataDir,"/tmpArray.RData",sep=""))
+    save("tmpArray",file=paste0(dataDir,"/tmpArray.RData"))
     ##all.sum <- apply(tmpArray,c(1,2,3),sum,na.rm=TRUE)
 
     ## average over iterations and chains
@@ -179,7 +179,7 @@ combine <- function(tmp){
 #################################################
 ## difference function (not used as of 11/1/2013)
 diffSummary <- function(a,b){
-  load(file=paste(dataDir,"/tmpArray.RData",sep=""))
+  load(file=paste0(dataDir,"/tmpArray.RData"))
 
   theOnes <- match(c(a,b),dimnames(tmpArray)[[4]])
   d <- list(tmpArray[,,,theOnes[1]],
@@ -235,7 +235,7 @@ for(who in theResponses){
     cat(paste("post-processing for candidate",
               paste(who,collapse=" minus "),
                     "\n"))
-    fname <- paste(dataDir,'/',paste(who,collapse=""),".jags.RData",sep="")
+    fname <- paste0(dataDir,'/',paste(who,collapse=""),".jags.RData")
     if(file.exists(fname)){
         cat(paste("reading JAGS output and data from file",fname,"\n"))
         tmp[[paste(who,collapse=" minus ")]] <- postProcess(fname)
@@ -280,10 +280,19 @@ if(n.Contrasts>0){
 
 ##########################################
 
-write.csv(out,
-          file=paste(dataDir,"/out.csv",sep=""))
-
-write.csv(combineHouse(tmp),
-          file=paste(dataDir,"/house.csv",sep=""))
-
 unlink(paste(dataDir,"/*.RData",sep=""))
+
+post_csv <- function(frame, url) {
+  library(httr)
+
+  tempfile <- file()
+  write.csv(frame, file=tempfile)
+  bytes <- paste(readLines(tempfile), collapse='\r\n')
+  close(tempfile)
+
+  r <- httr::POST(url, body=list(csv=bytes))
+  httr::stop_for_status(r)
+}
+
+post_csv(out, paste0(base_url, '/api/charts/', chart, '/model-output.csv'))
+post_csv(combineHouse(tmp), paste0(base_url, '/api/charts/', chart, '/house-effects.csv'))
