@@ -168,7 +168,7 @@ makeJagsObject <- function(who,
 }
 
 makeInits <- function(){
-    sigma <- runif(n=1,0,.01)
+    sigma <- runif(n=1,0,.003)
     xi <- rep(NA,forJags$NPERIODS)
     xi[1] <- runif(n=1)
     for(i in 2:forJags$NPERIODS){
@@ -186,7 +186,7 @@ makeInits <- function(){
 }
 
 makeInitsContrasts <- function(){
-  sigma <- runif(n=1,0,.01)
+  sigma <- runif(n=1,0,.003)
   xi <- rep(0,forJags$NPERIODS)
 
   ## house effect delta inits
