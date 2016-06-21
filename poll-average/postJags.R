@@ -294,5 +294,6 @@ post_csv <- function(frame, url) {
   httr::stop_for_status(r)
 }
 
+#write.csv(out, 'model-output.csv')
 post_csv(out, paste0(base_url, '/api/charts/', chart, '/model-output.csv'))
 post_csv(combineHouse(tmp), paste0(base_url, '/api/charts/', chart, '/house-effects.csv'))

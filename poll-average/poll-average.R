@@ -9,6 +9,7 @@ options(stringsAsFactors=FALSE)
 args <- commandArgs(TRUE)
 base_url <- args[1]
 chart <- args[2]
+speed <- ifelse(is.na(args[3]), 'slow', args[3])
 
 ## url to the pollster csv
 data <- read.csv(file=url(paste0(base_url,"/",chart,".csv")))
@@ -81,9 +82,15 @@ data$pp <- paste(data$Pollster,data$Population,sep=":")
 thePollsters <- sort(unique(data$pp))
 
 dataDir <- paste0("data/",chart)
-M <- 1E3                  ## number of MCMC iterates
-keep <- 1E3               ## how many to keep
 dir.create(dataDir, showWarnings=FALSE, recursive=TRUE)
+
+if (speed == 'slow') {
+  M <- 100E3                            ## number of MCMC iterates
+  keep <- ifelse(NDAYS > 600, 1E3, 1E5) ## how many to keep
+} else {
+  M <- 1E3
+  keep <- 1E3
+}
 
 thin <- M/keep            ## thinning interval
 

@@ -34,7 +34,7 @@ R --vanilla -e 'install.packages(c("rjags", "truncnorm", "coda", "httr"), repos=
 
 ```sh
 cd poll-average
-Rscript --vanilla ./poll-average.R http://production-elections-internal.use1.huffpo.net/pollster 2016-new-hampshire-ayotte-vs-hassan
+Rscript --vanilla ./poll-average.R http://production-elections-internal.use1.huffpo.net/pollster 2016-new-hampshire-ayotte-vs-hassan fast
 ```
 
 This will:
@@ -46,6 +46,10 @@ This will:
 
 This doesn't use auth. Obviously, it won't work over the Internet: it'll only
 work on our VPN. (That's why we're not panicking about _not_ using HTTPS.)
+
+The `fast` argument means we shouldn't do a full MVMC run: we'll use a far lower
+M to save time. The alternative and default, `slow`, will be slower and more
+stable.
 
 # Code structure
 
