@@ -85,8 +85,8 @@ dataDir <- paste0("data/",chart)
 dir.create(dataDir, showWarnings=FALSE, recursive=TRUE)
 
 if (speed == 'slow') {
-  M <- 100E3                            ## number of MCMC iterates
-  keep <- ifelse(NDAYS > 600, 1E3, 1E5) ## how many to keep
+  M <- 1E5                              ## number of MCMC iterates
+  keep <- if (NDAYS > 600) 1E3 else 5E3 ## how many to keep
 } else {
   M <- 1E3
   keep <- 1E3
