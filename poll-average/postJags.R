@@ -230,19 +230,14 @@ combineHouse <- function(tmp){
 ## process jags output
 tmp <- list()
 for(who in theResponses){
-  who <- unlist(who)
-    cat("\n")
-    cat(paste("post-processing for candidate",
-              paste(who,collapse=" minus "),
-                    "\n"))
+    who <- unlist(who)
+    cat(sprintf(
+        "\nPost-processing for candidate %s\n",
+        paste(who, collapse=" minus ")
+    ))
     fname <- paste0(dataDir,'/',paste(who,collapse=""),".jags.RData")
-    if(file.exists(fname)){
-        cat(paste("reading JAGS output and data from file",fname,"\n"))
-        tmp[[paste(who,collapse=" minus ")]] <- postProcess(fname)
-    }
-    else {
-        cat(paste("nothing to do for",who,"\n"))
-    }
+    cat(paste("reading JAGS output and data from file",fname,"\n"))
+    tmp[[paste(who,collapse=" minus ")]] <- postProcess(fname)
 }
 
 ## combine response options
