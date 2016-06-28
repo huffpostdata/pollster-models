@@ -100,9 +100,7 @@ makeJagsObject <- function(who,
     tmpData <- data
     theColumn <- match(who,names(tmpData))
     if(any(is.na(theColumn))){
-        cat(paste("couldn't find",
-                  who,
-                  "in data, returning NULL\n"))
+        cat(sprintf("Couldn't find %s in data, returning NULL\n", who))
         return(NULL)
     }
 
@@ -201,12 +199,8 @@ makeInitsContrasts <- function(){
 for(who in theResponses){
   who <- unlist(who)
   print(length(who))
-    cat("\n")
-    cat(paste("running for outcome",
-              paste(who,collapse=" minus "),
-              "\n"))
+    cat(sprintf("\nRunning for outcome %s\n", paste(who, collapse=" minus ")))
 
-    library(rjags)
     tmp <- makeJagsObject(who,offset=0)
     forJags <- tmp$forJags
     firstDay <- tmp$firstDay
