@@ -98,11 +98,6 @@ makeJagsObject <- function(who,
                            offset=0){
     tmpData <- data
     theColumn <- match(who,names(tmpData))
-    if(any(is.na(theColumn))){
-        cat(sprintf("Couldn't find %s in data, returning NULL\n", who))
-        return(NULL)
-    }
-
     y.tmp <- tmpData[,theColumn]                     ## the response
     y.tmp <- matrix(y.tmp,ncol=length(theColumn))    ## be a matrix
     ok <- apply(y.tmp,1,function(x)!(any(is.na(x)))) ## clobber NA
@@ -203,10 +198,6 @@ for(who in theResponses){
     tmp <- makeJagsObject(who,offset=0)
     forJags <- tmp$forJags
     firstDay <- tmp$firstDay
-
-    if(is.null(forJags)){
-        next
-    }
 
   initFunc <- makeInits
   if(length(who)==2){
