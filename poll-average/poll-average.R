@@ -32,15 +32,14 @@ data <- data[!data$Population =="Adults - independent", ]
 ## who are the candidates?
 otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation")
 others <- c("Other","Undecided","Not Voting","Not.Voting","Refused","Wouldn't Vote","Wouldn.t.Vote","None")
-theCandidates <- setdiff(setdiff(colnames(data), others), otherCols)
 allChoices <- setdiff(colnames(data), otherCols)
 
 ## contrasts we want
-theContrasts <- list(theCandidates[1:2])
+theContrasts <- list(setdiff(allChoices, others)[1:2])
 
 ## what we will loop over, below
-theResponses <- as.vector(c(theCandidates,others),mode="list")
-theResponses <- c(theResponses,theContrasts)
+theResponses <- as.vector(allChoices, mode="list")
+theResponses <- c(theResponses, theContrasts)
 
 ## dates
 today <- as.Date(Sys.time(),tz="America/Washington_DC")
