@@ -72,9 +72,10 @@ if(any(nobs.bad)){
 data$nobs <- nobs
 rm(nobs)
 
-# change zeroes to NA
+# [adamhooper6] Value 0 makes for "Node inconsistent with parent" error. Use
+# almost-zero. By the way: I'm completely ignorant.
 for (choice in allChoices) {
-  data[[choice]] <- ifelse(data[[choice]]==0, NA, data[[choice]])
+  data[[choice]] <- ifelse(data[[choice]] == 0, 1E-6, data[[choice]])
 }
 
 ## pollsters and pops
