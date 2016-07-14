@@ -30,7 +30,7 @@ data <- data[!data$Population =="Adults - Republican", ]
 data <- data[!data$Population =="Adults - independent", ]
 
 ## who are the candidates?
-otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation")
+otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation","Question.Text","Question.Iteration")
 others <- c("Other","Undecided","Not Voting","Not.Voting","Refused","Wouldn't Vote","Wouldn.t.Vote","None")
 theCandidates <- setdiff(setdiff(colnames(data), others), otherCols)
 allChoices <- setdiff(colnames(data), otherCols)
