@@ -29,6 +29,11 @@ data <- data[!data$Population == "Adults - Democrat", ]
 data <- data[!data$Population =="Adults - Republican", ]
 data <- data[!data$Population =="Adults - independent", ]
 
+data1 <- data[!data$Question.Iteration =="2", ]
+data2 <- data[!data$Question.Iteration =="1", ]
+
+data <- if(chart=="2016-general-election-trump-vs-clinton-vs-johnson") data2 else data1
+
 ## who are the candidates?
 otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation","Question.Text","Question.Iteration")
 others <- c("Other","Undecided","Not Voting","Not.Voting","Refused","Wouldn't Vote","Wouldn.t.Vote","None")
