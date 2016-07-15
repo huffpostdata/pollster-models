@@ -37,15 +37,14 @@ data <- if(chart=="2016-general-election-trump-vs-clinton-vs-johnson") data2 els
 ## who are the candidates?
 otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation","Question.Text","Question.Iteration")
 others <- c("Other","Undecided","Not Voting","Not.Voting","Refused","Wouldn't Vote","Wouldn.t.Vote","None")
-theCandidates <- setdiff(setdiff(colnames(data), others), otherCols)
 allChoices <- setdiff(colnames(data), otherCols)
 
 ## contrasts we want
-theContrasts <- list(theCandidates[1:2])
+theContrasts <- list(setdiff(allChoices, others)[1:2])
 
 ## what we will loop over, below
-theResponses <- as.vector(c(theCandidates,others),mode="list")
-theResponses <- c(theResponses,theContrasts)
+theResponses <- as.vector(allChoices, mode="list")
+theResponses <- c(theResponses, theContrasts)
 
 ## dates
 today <- as.Date(Sys.time(),tz="America/Washington_DC")
@@ -105,11 +104,6 @@ makeJagsObject <- function(who,
                            offset=0){
     tmpData <- data
     theColumn <- match(who,names(tmpData))
-    if(any(is.na(theColumn))){
-        cat(sprintf("Couldn't find %s in data, returning NULL\n", who))
-        return(NULL)
-    }
-
     y.tmp <- tmpData[,theColumn]                     ## the response
     y.tmp <- matrix(y.tmp,ncol=length(theColumn))    ## be a matrix
     ok <- apply(y.tmp,1,function(x)!(any(is.na(x)))) ## clobber NA
@@ -210,10 +204,6 @@ for(who in theResponses){
     tmp <- makeJagsObject(who,offset=0)
     forJags <- tmp$forJags
     firstDay <- tmp$firstDay
-
-    if(is.null(forJags)){
-        next
-    }
 
   initFunc <- makeInits
   if(length(who)==2){
