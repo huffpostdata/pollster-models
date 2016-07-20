@@ -29,6 +29,8 @@ data <- data[!data$Population == "Adults - Democrat", ]
 data <- data[!data$Population =="Adults - Republican", ]
 data <- data[!data$Population =="Adults - independent", ]
 
+data <- subset(data, data$Question.Iteration==1) #temp fix until we're ready to deploy Johnson chart
+
 ## who are the candidates?
 otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation","Question.Text","Question.Iteration")
 others <- c("Other","Undecided","Not Voting","Not.Voting","Refused","Wouldn't Vote","Wouldn.t.Vote","None")
