@@ -4,7 +4,9 @@
 ## simon jackman
 ## october 2013
 #####################################
-suppressPackageStartupMessages(c(library('coda'),library('rjags')))
+suppressPackageStartupMessages(library('rjags'))
+library('coda')
+
 options(stringsAsFactors=FALSE)
 args <- commandArgs(TRUE)
 base_url <- args[1]
@@ -12,75 +14,69 @@ chart <- args[2]
 speed <- ifelse(is.na(args[3]), 'slow', args[3])
 
 ## url to the pollster csv
-data <- read.csv(file=url(paste0(base_url,"/",chart,".csv")))
+data <- read.csv(
+  file=url(paste0(base_url,"/api/charts/",chart,".csv")),
+  colClasses=c(
+    "start_date"="Date",
+    "end_date"="Date"
+  ),
+  check.names=FALSE
+)
 
 #############################
 ## data preperation for jags
 #############################
 
-#Delete subpopulations data
-data <- data[!data$Population == "Registered Voters - Democrat", ]
-data <- data[!data$Population =="Registered Voters - Republican", ]
-data <- data[!data$Population =="Registered Voters - independent", ]
-data <- data[!data$Population == "Likely Voters - Democrat", ]
-data <- data[!data$Population =="Likely Voters - Republican", ]
-data <- data[!data$Population =="Likely Voters - independent", ]
-data <- data[!data$Population == "Adults - Democrat", ]
-data <- data[!data$Population =="Adults - Republican", ]
-data <- data[!data$Population =="Adults - independent", ]
+calculate_labels <- function(col_names) {
+  last_choice_index <- match('poll_id', col_names) - 1
+  return(col_names[1:last_choice_index])
+}
 
-data <- subset(data, data$Question.Iteration==1) #temp fix until we're ready to deploy Johnson chart
+calculate_responses <- function(col_names) {
+  all_choices <- calculate_labels(col_names)
 
-## who are the candidates?
-otherCols <- c("Pollster", "Entry.Date.Time..ET.", "Mode", "Start.Date", "Number.of.Observations", "Pollster.URL", "End.Date", "Population", "Source.URL", "Partisan", "Affiliation","Question.Text","Question.Iteration")
-others <- c("Other","Undecided","Not Voting","Not.Voting","Refused","Wouldn't Vote","Wouldn.t.Vote","None")
-allChoices <- setdiff(colnames(data), otherCols)
+  stable_choices <- setdiff(all_choices, c("Other","Undecided","Not Voting","Refused","Wouldn't Vote","None"))
 
-## contrasts we want
-theContrasts <- list(setdiff(allChoices, others)[1:2])
+  contrast <- list(stable_choices[1:2])
+
+  return(c(all_choices, contrast))
+}
 
 ## what we will loop over, below
-theResponses <- as.vector(allChoices, mode="list")
-theResponses <- c(theResponses, theContrasts)
+theResponses <- calculate_responses(colnames(data))
 
 ## dates
 today <- as.Date(Sys.time(),tz="America/Washington_DC")
-data$startDate <- as.Date(data$Start.Date)
-data$endDate <- as.Date(data$End.Date)
-dateSeq <- seq.Date(from=min(data$startDate),
+dateSeq <- seq.Date(from=min(data$start_date),
                     to=today,
                     by="day")
-data$fieldPeriod <- as.numeric(data$endDate)-as.numeric(data$startDate)
-#data <- subset(data, fieldPeriod>=0)
-if(any(data$fieldPeriod<0)){
+data$n_days <- as.numeric(data$end_date)-as.numeric(data$start_date) + 1
+if (any(data$n_days < 1)) {
     stop("found mangled start and end dates")
 }
-data$fieldPeriod <- data$fieldPeriod + 1
 NDAYS <- length(dateSeq)
 
 ## missing sample sizes?
-nobs <- data$Number.of.Observations
-nobs.bad <- is.na(nobs) | is.nan(nobs) | nobs<=0
+nobs <- data$sample_size
+nobs.bad <- is.na(nobs) | nobs <= 0
 if(any(nobs.bad)){
-    cat(paste("mean imputing for",
-              sum(nobs.bad),
-              "bad/missing sample sizes\n"))
-    nobs.bar <- tapply(nobs,data$Pollster,mean,na.rm=TRUE)
+    cat(paste("mean imputing for", sum(nobs.bad), "bad/missing sample sizes\n"))
+    nobs.bar <- tapply(nobs,data$pollster,mean,na.rm=TRUE)
     nobs.bar[is.na(nobs.bar)] <- mean(nobs,na.rm=TRUE)
 
-    nobs[nobs.bad] <- nobs.bar[match(data$Pollster[nobs.bad],names(nobs.bar))]
+    nobs[nobs.bad] <- nobs.bar[match(data$pollster[nobs.bad],names(nobs.bar))]
 }
 data$nobs <- nobs
 rm(nobs)
 
 # [adamhooper6] Value 0 makes for "Node inconsistent with parent" error. Use
 # almost-zero. By the way: I'm completely ignorant.
-for (choice in allChoices) {
-  data[[choice]] <- ifelse(data[[choice]] == 0, 1E-6, data[[choice]])
+for (label in calculate_labels(colnames(data))) {
+  data[[label]] <- ifelse(data[[label]] == 0, 1E-6, data[[label]])
 }
 
 ## pollsters and pops
-data$pp <- paste(data$Pollster,data$Population,sep=":")
+data$pp <- paste0(data$pollster, ":", data$sample_subpopulation)
 thePollsters <- sort(unique(data$pp))
 
 dataDir <- paste0("data/",chart)
@@ -128,9 +124,9 @@ makeJagsObject <- function(who,
     counter <- 1
     pollList <- list()
     for(i in 1:NPOLLS){
-        pollLength <- tmpData$fieldPeriod[i]
+        pollLength <- tmpData$n_days[i]
         ##cat(paste("pollLength:",pollLength,"\n"))
-        dateSeq.limits <- match(c(tmpData$startDate[i],tmpData$endDate[i]),dateSeq)
+        dateSeq.limits <- match(c(tmpData$start_date[i],tmpData$end_date[i]),dateSeq)
         dateSeq.local <- dateSeq.limits[1]:dateSeq.limits[2]
         ##cat("dateSeq.local:\n")
         ##print(dateSeq.local)
@@ -147,7 +143,7 @@ makeJagsObject <- function(who,
     forJags$NPERIODS <- length(dateSeq)
 
     ## renormalize dates relative to what we have for this candidate
-    firstDay <- match(min(tmpData$startDate),dateSeq)
+    firstDay <- match(min(tmpData$start_date),dateSeq)
     forJags$date <- forJags$date - firstDay + 1
     forJags$NPERIODS <- forJags$NPERIODS - firstDay + 1
 
@@ -195,7 +191,7 @@ makeInitsContrasts <- function(){
 ## loop over the responses to be modelled
 for(who in theResponses){
   who <- unlist(who)
-  print(length(who))
+
     cat(sprintf("\nRunning for outcome %s\n", paste(who, collapse=" minus ")))
 
     tmp <- makeJagsObject(who,offset=0)
@@ -210,7 +206,9 @@ for(who in theResponses){
     foo <- jags.model(file="singleTarget.bug",
                       data=forJags,
                       n.chains=4,
-                      inits=initFunc)
+                      inits=initFunc,
+                      quiet=TRUE
+                      )
     update(foo,M/5)
 
     out <- coda.samples(foo,
@@ -220,9 +218,7 @@ for(who in theResponses){
     ## save output
     fname <- paste0(dataDir,'/',gsub(paste(who,collapse=""),pattern=" ",replacement=""),
                     ".jags.RData")
-    save("data","dateSeq","firstDay",
-         "forJags","out",
-         file=fname)
+    save("data","dateSeq","firstDay", "forJags","out", file=fname)
 }
 
 source("postJags.R")
