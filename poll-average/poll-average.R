@@ -67,6 +67,8 @@ if(any(nobs.bad)){
     nobs[nobs.bad] <- nobs.bar[match(data$pollster[nobs.bad],names(nobs.bar))]
 }
 data$nobs <- nobs
+data$nobs <- ifelse(data$nobs > 3000, 3000, data$nobs)
+
 rm(nobs)
 
 # [adamhooper6] Value 0 makes for "Node inconsistent with parent" error. Use
