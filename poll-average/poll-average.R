@@ -1,8 +1,7 @@
 #####################################
 ## fit model
 ##
-## simon jackman
-## october 2013
+## July 2016
 #####################################
 suppressPackageStartupMessages(library('rjags'))
 library('coda')
