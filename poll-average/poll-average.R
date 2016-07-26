@@ -67,7 +67,7 @@ if(any(nobs.bad)){
     nobs[nobs.bad] <- nobs.bar[match(data$pollster[nobs.bad],names(nobs.bar))]
 }
 data$nobs <- nobs
-data$nobs <- ifelse(data$nobs > 3000, 3000, data$nobs)
+data$nobs_truncated <- ifelse(data$nobs > 3000, 3000, data$nobs)
 
 rm(nobs)
 
@@ -112,10 +112,10 @@ makeJagsObject <- function(who,
       va <- a*(1-a)
       vb <- b*(1-b)
       cov <- -a*b
-      v <- (va + vb - 2*cov)/tmpData$nobs
+      v <- (va + vb - 2*cov)/tmpData$nobs_truncated
     } else {
       y <- y/100
-      v <- y*(1-y)/tmpData$nobs          ## variance
+      v <- y*(1-y)/tmpData$nobs_truncated          ## variance
     }
     prec <- 1/v
     ## pollster/population combinations
