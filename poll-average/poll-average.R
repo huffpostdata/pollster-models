@@ -96,13 +96,14 @@ thin <- M/keep            ## thinning interval
 ## object for jags
 makeJagsObject <- function(who,
                            offset=0){
-    tmpData <- data
-    theColumn <- match(who,names(tmpData))
-    y.tmp <- tmpData[,theColumn]                     ## the response
-    y.tmp <- matrix(y.tmp,ncol=length(theColumn))    ## be a matrix
-    ok <- apply(y.tmp,1,function(x)!(any(is.na(x)))) ## clobber NA
-    tmpData <- tmpData[ok,]                          ## subset to obs with good data
-    y <- as.matrix(tmpData[,theColumn])
+    # Find just the non-NA rows
+    if (length(who) == 1) {
+      ok <- !is.na(data[,who])
+    } else {
+      ok <- apply(data[,who], 1, function(x) { return(length(x) > 0 && all(!is.na(x))) })
+    }
+    tmpData <- data[ok, c(who, 'start_date', 'end_date', 'n_days', 'nobs_truncated', 'pp')]
+    y <- as.matrix(tmpData[,who])
     if(dim(y)[2]==2){
       ## we have a contrast!
       a <- y[,1]/100
