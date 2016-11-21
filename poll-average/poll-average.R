@@ -4,7 +4,6 @@
 ## July 2016
 #####################################
 suppressPackageStartupMessages(library('rjags'))
-library('coda')
 
 options(stringsAsFactors=FALSE)
 args <- commandArgs(TRUE)
