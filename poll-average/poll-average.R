@@ -5,7 +5,6 @@
 #####################################
 suppressPackageStartupMessages(library('rjags'))
 
-options(stringsAsFactors=FALSE)
 args <- commandArgs(TRUE)
 base_url <- args[1]
 chart <- args[2]
