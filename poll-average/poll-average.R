@@ -2,7 +2,7 @@ options(warn=2, showWarnCalls=TRUE)
 
 suppressPackageStartupMessages(library('rjags'))
 library(httr)
-library(jsonlite)
+suppressPackageStartupMessages(library(jsonlite))
 
 McmcParams <- list(
   fast=list(
@@ -19,7 +19,7 @@ McmcParams <- list(
   )
 )
 
-MakeJagsObjectForAverage <- function(pollPoints) {
+MakeJagsObjectForAverage <- function(pollPoints, endDate) {
   # Creates data for rjags.
   #
   # pollPoints is a data.frame with
@@ -48,7 +48,7 @@ MakeJagsObjectForAverage <- function(pollPoints) {
       date=rep(pollPoints$start_date - startDate, pollPoints$n_days) + sequence(pollPoints$n_days),
       NOBS=sum(pollPoints$n_days),
       NHOUSES=length(methodologies),
-      NPERIODS=as.integer(max(pollPoints$end_date) - min(pollPoints$start_date) + 1),
+      NPERIODS=as.integer(endDate - startDate + 1),
       d0=rep(0, length(methodologies)),
       D0=diag(delta.prior.prec, length(methodologies))
     ),
@@ -86,6 +86,10 @@ MakeJagsChainInitsBuilder <- function(nDates, nMethodologies, isContrast) {
   })
 }
 
+FractionToRoundedPercent <- function(fraction) {
+  return(round(100 * fraction, digits=4))
+}
+
 JagsOutputToDateEstimates <- function(jagsOutput, jagsObject, clampAtZero) {
   # Turns the mcmc.list from a JAGS run into a data.frame
   #
@@ -109,10 +113,10 @@ JagsOutputToDateEstimates <- function(jagsOutput, jagsObject, clampAtZero) {
 
   return(data.frame(
     date=seq.Date(from=jagsObject$firstDate, by='day', length.out=jagsObject$jagsInput$NPERIODS),
-    xibar=100 * apply(values, 'date', mean),
-    lo=100 * apply(values, 'date', function(row) quantile(row, 0.025)),
-    up=100 * apply(values, 'date', function(row) quantile(row, 0.975)),
-    prob=apply(values, 'date', function(row) mean(row >= 0))
+    xibar=FractionToRoundedPercent(apply(values, 'date', mean)),
+    lo=FractionToRoundedPercent(apply(values, 'date', function(row) quantile(row, 0.025))),
+    up=FractionToRoundedPercent(apply(values, 'date', function(row) quantile(row, 0.975))),
+    prob=FractionToRoundedPercent(apply(values, 'date', function(row) mean(row >= 0)))
   ))
 }
 
@@ -138,10 +142,10 @@ JagsOutputToHouseEffects <- function(jagsOutput, jagsObject) {
 
   return(data.frame(
     pollster=jagsObject$indexToMethodology,
-    est=100 * apply(values, 'methodology', mean),
-    lo=100 * apply(values, 'methodology', function(row) quantile(row, 0.025)),
-    hi=100 * apply(values, 'methodology', function(row) quantile(row, 0.975)),
-    dev=100 * apply(values, 'methodology', sd),
+    est=FractionToRoundedPercent(apply(values, 'methodology', mean)),
+    lo=FractionToRoundedPercent(apply(values, 'methodology', function(row) quantile(row, 0.025))),
+    hi=FractionToRoundedPercent(apply(values, 'methodology', function(row) quantile(row, 0.975))),
+    dev=FractionToRoundedPercent(apply(values, 'methodology', sd)),
     row.names=NULL
   ))
 }
@@ -162,7 +166,7 @@ CalculateAverageByDate <- function(pollPoints, isContrast, endDate) {
   #  houseEffects: data.frame with pollster,est,lo,hi,dev
   mcmcParams <- McmcParams[[speed]]
 
-  jagsObject <- MakeJagsObjectForAverage(pollPoints)
+  jagsObject <- MakeJagsObjectForAverage(pollPoints, endDate)
 
   jagsModel <- jags.model(
     file="./singleTarget.bug",
@@ -263,6 +267,7 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
 
     output <- CalculateAverageByDate(pollPoints, FALSE, endDate)
     dateEstimates <- output$dateEstimates
+    dateEstimates$prob <- NA # probability only applies to contrasts
     houseEffects <- output$houseEffects
 
     cat("\n")
@@ -316,14 +321,19 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
   ))
 }
 
-PostCsv <- function(frame, url) {
+FrameToCsvBytes <- function(frame) {
+  # Global options, yay R...
+  options(scipen=999)
+
   tempfile <- file()
-  formattedFrame <- format(frame, digits=4, scientific=FALSE, na.encode=FALSE)
-  write.csv(formattedFrame, file=tempfile, na="", row.names=FALSE)
+  write.csv(frame, file=tempfile, na="", row.names=FALSE)
   bytes <- paste(readLines(tempfile), collapse='\r\n')
   close(tempfile)
+  return(bytes)
+}
 
-  r <- httr::POST(url, body=list(csv=bytes))
+PostCsv <- function(csvBytes, url) {
+  r <- httr::POST(url, body=list(csv=csvBytes))
   httr::stop_for_status(r)
 }
 
@@ -334,7 +344,5 @@ speed <- ifelse(length(args) >= 3 && args[3] == 'fast', 'fast', 'slow')
 
 results <- AnalyzePollsterChart(base_url, chart, speed)
 
-print(results)
-
-#PostCsv(results$dateEstimates, paste0(base_url, '/api/charts/', chart, '/model-output.csv'))
-#PostCsv(results$houseEffects, paste0(base_url, '/api/charts/', chart, '/house-effects.csv'))
+#PostCsv(FrameToCsvBytes(results$dateEstimates), paste0(base_url, '/api/charts/', chart, '/model-output.csv'))
+#PostCsv(FrameToCsvBytes(results$houseEffects), paste0(base_url, '/api/charts/', chart, '/house-effects.csv'))
