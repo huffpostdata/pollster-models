@@ -8,7 +8,7 @@ McmcParams <- list(
   fast=list(
     n_iterations=1000,
     n_samples=1000,
-    n_chains=4,
+    n_chains=3,
     n_pre_monitor_iterations=1000
   ),
   slow=list(
@@ -57,7 +57,7 @@ MakeJagsObjectForAverage <- function(pollPoints, endDate) {
   ))
 }
 
-MakeJagsChainInitsBuilder <- function(nDates, nMethodologies, isContrast) {
+MakeJagsChainInitsBuilder <- function(nDates, nMethodologies) {
   # Creates a function to return initial values for a single JAGS "chain".
   #
   # In concept, a "chain" is one random population, i.e. a curve with date as
@@ -66,18 +66,14 @@ MakeJagsChainInitsBuilder <- function(nDates, nMethodologies, isContrast) {
   return(function() {
     sigma <- runif(n=1, 0, .003)
 
-    if (isContrast) {
-      xi <- rep(0, nDates)
-    } else {
-      # Walk a random curve
-      xi <- rep(NA, nDates)
-      xi[1] <- runif(n=1)
-      for (i in 2:nDates) {
-        xi[i] <- rnorm(n=1, xi[i-1], sd=sigma)
-      }
-      # Clamp between 0 and 1, exclusive
-      xi <- pmin(0.99999, pmax(0.00001, xi))
+    # Walk a random curve
+    xi <- rep(NA, nDates)
+    xi[1] <- runif(n=1)
+    for (i in 2:nDates) {
+      xi[i] <- rnorm(n=1, xi[i-1], sd=sigma)
     }
+    # Clamp between 0 and 1, exclusive
+    xi <- pmin(0.99999, pmax(0.00001, xi))
 
     # Create random house effects
     delta <- rnorm(n=nMethodologies, mean=0, sd=.02)
@@ -90,7 +86,7 @@ FractionToRoundedPercent <- function(fraction) {
   return(round(100 * fraction, digits=4))
 }
 
-JagsOutputToDateEstimates <- function(jagsOutput, jagsObject, clampAtZero) {
+JagsOutputToDateValuesArray <- function(jagsOutput, jagsObject) {
   # Turns the mcmc.list from a JAGS run into a data.frame
   #
   # Output columns: date,xibar,lo,up,prob. xibar,lo,up are out of 100.
@@ -104,7 +100,7 @@ JagsOutputToDateEstimates <- function(jagsOutput, jagsObject, clampAtZero) {
   # Each iteration is delta[1], ..., delta[N], xi[1], ..., xiN; take just "xi"
   iter_date_chain <- iter_date_chain[, grep("^xi", dimnames(iter_date_chain)[[2]]), ]
   # clamp each entry, so averages are taken of clamped values
-  iter_date_chain <- pmin(pmax(iter_date_chain, ifelse(clampAtZero, 0.0, -1.0)), 1.0)
+  iter_date_chain <- pmin(pmax(iter_date_chain, 0.0), 1.0)
 
   # Transpose so outer dims are date
   # [iteration, chain number, date integer]
@@ -112,14 +108,21 @@ JagsOutputToDateEstimates <- function(jagsOutput, jagsObject, clampAtZero) {
 
   # Cast as a 2D array: we don't need a difference between iter and chain
   dim(values) <- c(dim(values)[1] * dim(values)[2], dim(values)[3])
-  dimnames(values) <- list(iteration=NULL, date=NULL)
+  dimnames(values) <- list(
+    iteration=NULL,
+    date=seq.Date(from=jagsObject$firstDate, by='day', length.out=dim(values)[2])
+  )
 
+  return(values)
+}
+
+DateValuesToDateEstimates <- function(dateValues, jagsObject) {
   return(data.frame(
-    date=seq.Date(from=jagsObject$firstDate, by='day', length.out=dim(values)[2]),
-    xibar=FractionToRoundedPercent(apply(values, 'date', mean)),
-    lo=FractionToRoundedPercent(apply(values, 'date', function(row) quantile(row, 0.025))),
-    up=FractionToRoundedPercent(apply(values, 'date', function(row) quantile(row, 0.975))),
-    prob=FractionToRoundedPercent(apply(values, 'date', function(row) mean(row >= 0)))
+    date=seq.Date(from=jagsObject$firstDate, by='day', length.out=dim(dateValues)[2]),
+    xibar=FractionToRoundedPercent(apply(dateValues, 'date', mean)),
+    lo=FractionToRoundedPercent(apply(dateValues, 'date', function(row) quantile(row, 0.025))),
+    up=FractionToRoundedPercent(apply(dateValues, 'date', function(row) quantile(row, 0.975))),
+    prob=FractionToRoundedPercent(apply(dateValues, 'date', function(row) mean(row >= 0)))
   ))
 }
 
@@ -155,18 +158,17 @@ JagsOutputToHouseEffects <- function(jagsOutput, jagsObject) {
   ))
 }
 
-CalculateAverageByDate <- function(pollPoints, isContrast, endDate) {
+CalculateAverageByDate <- function(pollPoints, endDate) {
   # Uses an MCMC model to calculate poll averages per date.
   #
   # Args:
   #  pollPoints: data.frame: start_date,end_date,pollster_methodology,value,variance
   #              (pollster_methodology looks like "PPP:Adults")
   #              (value is between 0 and 1)
-  #  isContrast: if true, values are spreads between candidates (-1..1). If
-  #              false, values are poll results for a single candidate (0..1).
   #  endDate: last date to model (the start date is the first value date)
   #
   # Return value: a list() with:
+  #  dateValues: array of [iteration,date] poll results, [0..1]
   #  dateEstimates: data.frame with date,xibar,lo,up
   #  houseEffects: data.frame with pollster,est,lo,hi,dev
   mcmcParams <- McmcParams[[speed]]
@@ -179,8 +181,7 @@ CalculateAverageByDate <- function(pollPoints, isContrast, endDate) {
     n.chains=mcmcParams$n_chains,
     inits=MakeJagsChainInitsBuilder(
       jagsObject$jagsInput$NPERIODS,
-      jagsObject$jagsInput$NHOUSES,
-      isContrast
+      jagsObject$jagsInput$NHOUSES
     ),
     quiet=TRUE
   )
@@ -192,8 +193,12 @@ CalculateAverageByDate <- function(pollPoints, isContrast, endDate) {
     thin=mcmcParams$n_iterations / mcmcParams$n_samples
   )
 
+  dateValues <- JagsOutputToDateValuesArray(jagsOutput, jagsObject)
+  dateEstimates <- DateValuesToDateEstimates(dateValues, jagsObject)
+
   return(list(
-    dateEstimates=JagsOutputToDateEstimates(jagsOutput, jagsObject, !isContrast),
+    dateValues=dateValues,
+    dateEstimates=dateEstimates,
     houseEffects=JagsOutputToHouseEffects(jagsOutput, jagsObject)
   ))
 }
@@ -270,7 +275,7 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
     )
     pollPoints <- pollPoints[!is.na(pollPoints$value),]
 
-    output <- CalculateAverageByDate(pollPoints, FALSE, endDate)
+    output <- CalculateAverageByDate(pollPoints, endDate)
     dateEstimates <- output$dateEstimates
     dateEstimates$prob <- NA # probability only applies to contrasts
     houseEffects <- output$houseEffects
@@ -278,53 +283,44 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
     cat("\n")
 
     return(list(
+      dateValues=output$dateValues,
       dateEstimates=data.frame(who=rep(label, nrow(dateEstimates)), dateEstimates),
       houseEffects=data.frame(who=rep(label, nrow(houseEffects)), houseEffects)
     ))
   }
 
-  calculateAveragesForContrast <- function(label1, label2) {
+  calculateContrast <- function(label1, dateValues1, label2, dateValues2) {
     label <- paste0(label1, ' minus ', label2)
     cat(paste0("Running for outcome ", label))
 
-    a <- csv[[label1]] / 100
-    b <- csv[[label2]] / 100
-    y <- a - b
-    va <- a * (1 - a)
-    vb <- b * (1 - b)
-    cov <- -1 * a * b
-    variance <- pmax(0.00001, (va + vb - 2 * cov) / effectiveNobs)
+    start1 <- max(0, dim(dateValues2)[2] - dim(dateValues1)[2])
+    start2 <- max(0, dim(dateValues1)[2] - dim(dateValues2)[2])
+    dateValues1 <- dateValues1[, start1:dim(dateValues1)[2]]
+    dateValues2 <- dateValues2[, start2:dim(dateValues2)[2]]
 
-    pollPoints <- data.frame(
-      start_date=csv$start_date,
-      end_date=csv$end_date,
-      pollster_methodology=paste0(csv$pollster, ':', csv$sample_subpopulation),
-      value=y,
-      variance=variance
-    )
-    pollPoints <- pollPoints[!is.na(pollPoints$value),]
-
-    output <- CalculateAverageByDate(pollPoints, TRUE, endDate)
-    dateEstimates <- output$dateEstimates
-    houseEffects <- output$houseEffects
+    dateValues <- dateValues1 - dateValues2
 
     cat("\n")
 
-    return(list(
-      dateEstimates=data.frame(who=rep(label, nrow(dateEstimates)), dateEstimates),
-      houseEffects=data.frame(who=rep(label, nrow(houseEffects)), houseEffects)
+    return(data.frame(
+      who=rep(label, dim(dateValues)[2]),
+      date=seq.Date(from=as.Date(as.numeric(dimnames(dateValues)$date[1]), origin="1970-01-01"), by='day', length.out=dim(dateValues)[2]),
+      xibar=FractionToRoundedPercent(apply(dateValues, 'date', mean)),
+      lo=FractionToRoundedPercent(apply(dateValues, 'date', function(row) quantile(row, 0.025))),
+      up=FractionToRoundedPercent(apply(dateValues, 'date', function(row) quantile(row, 0.975))),
+      prob=FractionToRoundedPercent(apply(dateValues, 'date', function(row) mean(row >= 0)))
     ))
   }
 
   labelAverages <- lapply(labels, FUN=calculateAveragesForLabel)
-  contrastAverages <- calculateAveragesForContrast(labels[1], labels[2])
+  contrastAverages <- calculateContrast(labels[1], labelAverages[[1]]$dateValues, labels[2], labelAverages[[2]]$dateValues)
 
   dateEstimatesList <- lapply(labelAverages, function(x) x$dateEstimates)
   houseEffectsList <- lapply(labelAverages, function(x) x$houseEffects)
 
   return(list(
-    dateEstimates=rbind(do.call(rbind, dateEstimatesList), contrastAverages$dateEstimates),
-    houseEffects=rbind(do.call(rbind, houseEffectsList), contrastAverages$houseEffects)
+    dateEstimates=rbind(do.call(rbind, dateEstimatesList), contrastAverages),
+    houseEffects=rbind(do.call(rbind, houseEffectsList))
   ))
 }
 
