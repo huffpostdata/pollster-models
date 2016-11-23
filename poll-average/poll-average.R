@@ -328,7 +328,7 @@ FrameToCsvBytes <- function(frame) {
   options(scipen=999)
 
   tempfile <- file()
-  write.csv(frame, file=tempfile, na="", row.names=FALSE)
+  write.csv(frame, file=tempfile, na="")
   bytes <- paste(readLines(tempfile), collapse='\r\n')
   close(tempfile)
   return(bytes)
@@ -346,5 +346,5 @@ speed <- ifelse(length(args) >= 3 && args[3] == 'fast', 'fast', 'slow')
 
 results <- AnalyzePollsterChart(base_url, chart, speed)
 
-#PostCsv(FrameToCsvBytes(results$dateEstimates), paste0(base_url, '/api/charts/', chart, '/model-output.csv'))
-#PostCsv(FrameToCsvBytes(results$houseEffects), paste0(base_url, '/api/charts/', chart, '/house-effects.csv'))
+PostCsv(FrameToCsvBytes(results$dateEstimates), paste0(base_url, '/api/charts/', chart, '/model-output.csv'))
+PostCsv(FrameToCsvBytes(results$houseEffects), paste0(base_url, '/api/charts/', chart, '/house-effects.csv'))
