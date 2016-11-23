@@ -99,8 +99,11 @@ JagsOutputToDateEstimates <- function(jagsOutput, jagsObject, clampAtZero) {
   # It's only necessary for our "minus" runs; otherwise it's 1.
 
   # 3D array: [iteration, date integer, chain number]
-  # jagsOutput format: each iteration is xi1, xi2, xi3, ..., xiN, delta1, ..., deltaN
-  iter_date_chain <- as.array(jagsOutput)[, 1:jagsObject$jagsInput$NPERIODS, ]
+  iter_date_chain <- as.array(jagsOutput)
+
+  # Each iteration is delta[1], ..., delta[N], xi[1], ..., xiN; take just "xi"
+  iter_date_chain <- iter_date_chain[, grep("^xi", dimnames(iter_date_chain)[[2]]), ]
+  # clamp each entry, so averages are taken of clamped values
   iter_date_chain <- pmin(pmax(iter_date_chain, ifelse(clampAtZero, 0.0, -1.0)), 1.0)
 
   # Transpose so outer dims are date
@@ -112,7 +115,7 @@ JagsOutputToDateEstimates <- function(jagsOutput, jagsObject, clampAtZero) {
   dimnames(values) <- list(iteration=NULL, date=NULL)
 
   return(data.frame(
-    date=seq.Date(from=jagsObject$firstDate, by='day', length.out=jagsObject$jagsInput$NPERIODS),
+    date=seq.Date(from=jagsObject$firstDate, by='day', length.out=dim(values)[2]),
     xibar=FractionToRoundedPercent(apply(values, 'date', mean)),
     lo=FractionToRoundedPercent(apply(values, 'date', function(row) quantile(row, 0.025))),
     up=FractionToRoundedPercent(apply(values, 'date', function(row) quantile(row, 0.975))),
@@ -127,11 +130,13 @@ JagsOutputToHouseEffects <- function(jagsOutput, jagsObject) {
 
   # 3D array: [iteration, methodology index, chain number]
   # jagsOutput format: each iteration is xi1, xi2, xi3, ..., xiN, delta1, ..., deltaN
-  iter_date_chain <- as.array(jagsOutput)[, (jagsObject$jagsInput$NPERIODS + 1):(jagsObject$jagsInput$NPERIODS + jagsObject$jagsInput$NHOUSES), ]
+  iter_delta_chain <- as.array(jagsOutput)
+  # Each iteration is delta[1], ..., delta[N], xi[1], ..., xiN; take just "delta"
+  iter_delta_chain <- iter_delta_chain[, grep("^delta", dimnames(iter_delta_chain)[[2]]), ]
 
   # Transpose so outer dims are date
   # [iteration, chain number, date integer]
-  values <- aperm(iter_date_chain, c(1, 3, 2))
+  values <- aperm(iter_delta_chain, c(1, 3, 2))
 
   # Cast as a 2D array: we don't need a difference between iter and chain
   dim(values) <- c(dim(values)[1] * dim(values)[2], dim(values)[3])
@@ -280,7 +285,7 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
 
   calculateAveragesForContrast <- function(label1, label2) {
     label <- paste0(label1, ' minus ', label2)
-    cat(sprintf("Running for outcome %s\n", label))
+    cat(paste0("Running for outcome ", label))
 
     a <- csv[[label1]] / 100
     b <- csv[[label2]] / 100
