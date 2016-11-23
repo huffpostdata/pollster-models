@@ -221,7 +221,7 @@ FindCsvNumObservationsForVarianceCalculations <- function(csv) {
   # theory is: a poll with 10,000 observations is probably no more accurate than
   # a poll with 5,000 observations (because other methodology considerations are
   # more of a factor than number of observations).
-  nobsTruncated <- ifelse(nobs > 3000, 3000, nobs)
+  nobsTruncated <- pmin(3000, nobs)
 
   return(nobsTruncated)
 }
@@ -254,7 +254,7 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
     cat(paste0("Running for outcome ", label))
 
     y <- csv[[label]] / 100
-    variance <- pmin(0.00001, y * (1 - y) / effectiveNobs)
+    variance <- pmax(0.00001, y * (1 - y) / effectiveNobs)
 
     pollPoints <- data.frame(
       start_date=csv$start_date,
@@ -288,7 +288,7 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
     va <- a * (1 - a)
     vb <- b * (1 - b)
     cov <- -1 * a * b
-    variance <- pmin(0.00001, (va + vb - 2 * cov) / effectiveNobs)
+    variance <- pmax(0.00001, (va + vb - 2 * cov) / effectiveNobs)
 
     pollPoints <- data.frame(
       start_date=csv$start_date,
@@ -302,6 +302,8 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
     output <- CalculateAverageByDate(pollPoints, TRUE, endDate)
     dateEstimates <- output$dateEstimates
     houseEffects <- output$houseEffects
+
+    cat("\n")
 
     return(list(
       dateEstimates=data.frame(who=rep(label, nrow(dateEstimates)), dateEstimates),
