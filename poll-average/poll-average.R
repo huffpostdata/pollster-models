@@ -252,11 +252,14 @@ AnalyzePollsterChart <- function(baseUrl, slug, speed) {
   StopIfCsvHasBadDates(csv)
   effectiveNobs <- FindCsvNumObservationsForVarianceCalculations(csv)
 
-  json <- fromJSON(url(paste0(basenameUrl, ".json")))
+  json <- fromJSON(url(paste0(baseUrl, "/api/v2/charts/", chart, ".json")))
 
-  electionDate <- as.Date(json$election_date)
   todayDate <- Sys.Date()
-  endDate <- min(electionDate, todayDate)
+  if (is.null(json$question$election_date)) {
+    endDate <- todayDate
+  } else {
+    endDate <- min(as.Date(json$question$election_date), todayDate)
+  }
 
   labels <- FindCsvLabels(csv)
 
